@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deteksi Wajah OpenCV | Sistem Keamanan Digital</title>
+    <style>
+        :root {
+            --red: #f44336;
+            --orange: #ff9800;
+            --yellow: #ffc107;
+            --green: #4caf50;
+            --light: #fffaf2;
+            --text: #2e2e2e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--light);
+            color: var(--text);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(120deg, var(--red), var(--orange), var(--yellow));
+            color: white;
+            text-align: center;
+            padding: 4rem 1.5rem;
+            transition: all 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            background-color: var(--green);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #388e3c;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background-color: var(--green);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+        }
+
+        nav h2 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            background: white;
+            height: 3px;
+            width: 25px;
+            margin: 4px 0;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: var(--green);
+                padding: 1rem 0;
+                text-align: center;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+        }
+
+        /* SECTION STYLE */
+        .section {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        .section.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            color: var(--red);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section p {
+            line-height: 1.7;
+        }
+
+        /* === CARD STYLE === */
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            flex: 1 1 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.8s ease, box-shadow 0.4s ease, transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hover & touch animation */
+        .card:hover,
+        .card:active {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Smooth pop effect for mobile when tapped */
+        .card:focus {
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        /* TIMELINE */
+        .timeline {
+            background: linear-gradient(120deg, var(--yellow), var(--orange));
+            padding: 3rem 1rem;
+            color: #fff;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        .timeline.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .timeline h2 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        /* === STEP STYLE (Sinkron dengan CARD) === */
+        .step {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.2rem;
+            border-radius: 15px;
+            width: 220px;
+            text-align: center;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.8s ease, box-shadow 0.4s ease, transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .step.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Hover & sentuh */
+        .step:hover,
+        .step:active {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Untuk tap di mobile */
+        .step:focus {
+            outline: none;
+            transform: scale(1.05);
+        }
+
+
+        /* DEMO SECTION */
+        .demo {
+            background: linear-gradient(120deg, var(--green), var(--orange));
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        .demo.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .demo a {
+            background: white;
+            color: var(--green);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 0.5rem;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .demo a:hover {
+            background: var(--yellow);
+            color: var(--red);
+        }
+
+        footer {
+            margin-top: auto;
+            background: var(--red);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        footer.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        footer h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Saat diarahkan atau disentuh */
+        footer h3:hover {
+            color: var(--yellow);
+            transform: scale(1.1);
+        }
+
+        /* Team muncul elegan dari bawah */
+        .footer-team {
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            pointer-events: none;
+        }
+
+        footer.active .footer-team {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .footer-team p {
+            margin: 0.4rem 0;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        footer.active .footer-team p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 3rem 1rem;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                margin: 2rem 0;
+            }
+
+            .section p {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Deteksi Wajah dengan OpenCV</h1>
+        <p>Solusi cerdas dalam sistem keamanan digital berbasis biometrik wajah</p>
+        <button class="btn" onclick="document.getElementById('info').scrollIntoView({ behavior: 'smooth' })">Pelajari
+            Lebih Lanjut</button>
+    </header>
+
+    <nav>
+        <h2>OpenCV Secure</h2>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <a href="#info">Informasi</a>
+            <a href="#proses">Cara Kerja</a>
+            <a href="#demo">Demo</a>
+            <a href="#footer">About Us</a>
+        </div>
+    </nav>
+
+    <section id="info" class="section">
+        <h2>Kenali Teknologi OpenCV dan Deteksi Wajah</h2>
+        <p>OpenCV adalah pustaka open-source yang banyak digunakan dalam pengolahan citra digital. Dalam konteks
+            keamanan, teknologi ini membantu sistem komputer mengenali wajah pengguna untuk proses autentikasi secara
+            otomatis dan efisien.</p>
+        <div class="cards">
+            <div class="card">
+                <h3>Apa Itu OpenCV?</h3>
+                <p>Pustaka pemrosesan citra yang mampu mendeteksi, mengenali, dan menganalisis wajah secara real-time.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Mengapa Deteksi Wajah?</h3>
+                <p>Karena biometrik wajah unik untuk setiap individu, menjadikannya metode autentikasi yang lebih aman
+                    daripada kata sandi.</p>
+            </div>
+            <div class="card">
+                <h3>Keamanan Digital</h3>
+                <p>Sistem keamanan modern memanfaatkan algoritma pembelajaran mesin untuk mengenali pengguna dengan
+                    akurasi tinggi.</p>
+            </div>
+            <div class="card">
+                <h3>Tantangan Teknologi</h3>
+                <p>Variasi pencahayaan, ekspresi, dan privasi pengguna menjadi aspek penting dalam pengembangan sistem
+                    ini.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="proses" class="timeline">
+        <h2>Cara Kerja Deteksi Wajah</h2>
+        <div class="steps">
+            <div class="step">
+                <h4>Pendeteksian</h4>
+                <p>Kamera menangkap citra wajah untuk dianalisis oleh sistem.</p>
+            </div>
+            <div class="step">
+                <h4>Ekstraksi Fitur</h4>
+                <p>Algoritma OpenCV mengenali pola unik dari wajah pengguna.</p>
+            </div>
+            <div class="step">
+                <h4>Pencocokan</h4>
+                <p>Sistem membandingkan hasil analisis dengan data biometrik yang tersimpan.</p>
+            </div>
+            <div class="step">
+                <h4>Autentikasi</h4>
+                <p>Wajah diverifikasi, dan akses sistem diberikan secara otomatis.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo">
+        <h2>Demontrasi Deteksi Wajah</h2>
+        <p>Langsung coba bagaimana sistem deteksi wajah bekerja secara real-time melalui demo berikut:</p>
+        <a href="https://justadudewhohacks.github.io/face-api.js/" target="_blank">Coba face-api.js Playground</a>
+    </section>
+
+    <footer id="footer">
+        <h3>About Us</h3>
+        <div class="footer-team">
+            <p>Mohammad Arya Dhinata</p>
+            <p>Muhammad Dzaka</p>
+            <p>Muhammad Hilman Taftazani</p>
+            <p>Rhafa Farell Valeno</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('nav-links');
+            nav.classList.toggle('show');
+        }
+
+        // Efek animasi scroll (scale-up + delay bertahap)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('show');
+                    }, index * 150);
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        // Observe semua elemen utama agar dapat animasi
+        document.querySelectorAll('.section, .card, .timeline, .timeline h2, .step, .demo, footer')
+            .forEach(el => observer.observe(el));
+
+        // Animasi interaktif footer (About Us)
+        const footer = document.querySelector("footer");
+        const footerTitle = footer.querySelector("h3");
+
+        footerTitle.addEventListener("click", () => {
+            footer.classList.toggle("active");
+        });
+
+        footerTitle.addEventListener("mouseenter", () => {
+            footer.classList.add("active");
+        });
+
+        footer.addEventListener("mouseleave", () => {
+            footer.classList.remove("active");
+        });
+
+        // Hover animation untuk mobile (card dan step)
+        document.querySelectorAll('.card, .step').forEach(item => {
+            item.addEventListener('touchstart', () => {
+                item.classList.add('hovered');
+                setTimeout(() => item.classList.remove('hovered'), 600);
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

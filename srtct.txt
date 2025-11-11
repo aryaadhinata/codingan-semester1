@@ -1,0 +1,6 @@
+gcc main.c -o main && ./main < input.txt
+ctrl + j (open langsung terminal)
+ctrl f2 (ganti semua variabel yang sama)
+ctrl + alt (banyakk type)
+shift + tab (mundur)
+shift + alt + down/up
