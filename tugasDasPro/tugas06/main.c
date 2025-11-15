@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void pertarungan(int n, char nama[], int hp, int damage, char rank[], char tipe[], int Ehp, int Edamage, char Etipe[]){
+void pertarungan(int n, char nama[][129], int hp[], int damage[], char rank[][129], char tipe[][129], int Ehp, int Edamage, char Etipe[]){
 	for(int h = 0; h < n; h++){
 		printf("+--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--+\n");
 		printf("Saatnya menyerang Kege1apan (> ^ <)\n");
