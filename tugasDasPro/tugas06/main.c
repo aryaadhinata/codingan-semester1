@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 
-void turn(char nama[], int *hp, int damage, char rank[], char tipe[], int *Ehp, int Edamage, char Etipe[]){
+void turn(int i, char nama[], int damage[i], char tipe[], int Ehp, char Etipe[]){
 	if((strcmp(tipe, "Data") == 0) && (strcmp(Etipe, "Vaccine") == 0) ||
 		(strcmp(tipe, "Virus") == 0) && (strcmp(Etipe, "Data") == 0) ||
 		(strcmp(tipe, "Vaccine") == 0) && (strcmp(Etipe, "Virus") == 0)){
-		damage *= 2;
+		damage[i] *= 2;
 	}
 	
 	printf("|--- %s memberikan %d damage ke Myostismon\n", nama, damage);
-	*Ehp -= damage;
+	Ehp -= damage[i];
 }
 
-void Eturn(char nama[], int *hp, int damage, char rank[], char tipe[], int *Ehp, int Edamage, char Etipe[]){
+void Eturn(int i, char nama[], int hp, int Edamage,  char tipe[], char Etipe[]){
 	if((strcmp(Etipe, "Data") == 0) && (strcmp(tipe, "Vaccine") == 0) ||
 		(strcmp(Etipe, "Virus") == 0) && (strcmp(tipe, "Data") == 0) ||
 		(strcmp(Etipe, "Vaccine") == 0) && (strcmp(tipe, "Virus") == 0)){
@@ -20,24 +20,24 @@ void Eturn(char nama[], int *hp, int damage, char rank[], char tipe[], int *Ehp,
 	}
 	
 	printf("/--- %s memberikan %d damage ke Myostismon\n", nama, Edamage);
-	*hp -= damage;
+	hp -= Edamage;
 }
 
 void status(char nama[], int hp){
-	printf("Sisa HP %s sekarang %d\n", nama, hp);
+	printf("Sisa HP %s sekarang %d\n", nama, &hp);
 }
 
-void pertarungan(int n, char nama[][129], int hp[], int damage[], char rank[][129], char tipe[][129], int Ehp, int Edamage, char Etipe[]){
+void pertarungan(int n, char nama[][129], int *hp[], int damage[], char rank[][129], char tipe[][129], int *Ehp, int Edamage, char Etipe[]){
 	for(int h = 0; h < n; h++){
 		printf("+--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--+\n");
 		printf("Saatnya menyerang Kege1apan (> ^ <)\n");
 		for(int i = 0; i < 3; i++){
-			turn(nama[i], *hp[i], damage[i], rank[i], tipe[i], *Ehp, Edamage, Etipe);
+			turn(i, nama[i], damage[i], tipe[i], Ehp, Etipe);
 		}
 
 		printf("\nHati - hati, Myostismon akan menyerang (,,>__<,,)\n");
 		for(int i = 0; i < 3; i++){
-			Eturn(nama[i], *hp[i], damage[i], rank[i], tipe[i], *Ehp, Edamage, Etipe);
+			Eturn(i, nama[i], hp[i], Edamage, tipe[i], Etipe);
 		}
 		
 		printf("\n");
@@ -79,6 +79,6 @@ int main(){
 	char sort[17];
 	scanf(" %s", sort);
 	
-	pertarungan(n, nama, *hp, damage, rank, tipe, *Ehp, Edamage, Etipe);
+	pertarungan(n, nama, &hp, damage, rank, tipe, &Ehp, Edamage, Etipe);
 	return 0;
 }
