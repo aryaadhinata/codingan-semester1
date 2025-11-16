@@ -1,11 +1,3 @@
-/*
-	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan tes pemrogaraman
-	dalam mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
-	kecurangan seperti yang di spesifikasikan. Aamin
-*/
-#include <stdio.h>
-#include <string.h>
-
 void turn(int i, char nama[], int damage, char tipe[], int *Ehp, char Etipe[]){
 	if((strcmp(tipe, "Data") == 0) && (strcmp(Etipe, "Vaccine") == 0) ||
 		(strcmp(tipe, "Virus") == 0) && (strcmp(Etipe, "Data") == 0) ||
@@ -104,47 +96,4 @@ void endWorld(int *h, int n, int *l, char sort[], int Ehp, char nama[][129], cha
 	}else if(strcmp(sort, "quick") == 0){
 		
 	}
-}
-
-
-int main(){
-	// atribut 
-	char nama[3][129], rank[3][129], tipe[3][129];
-	int hp[3], damage[3];
-	for(int i = 0; i < 3; i++){
-		scanf("%s %d %d %s %s", nama[i], &hp[i], &damage[i], rank[i], tipe[i]);
-	}
-	
-	// atribut Myostismon
-	int Ehp, Edamage;
-	char Etipe[129];
-	scanf("%d %d %s", &Ehp, &Edamage, Etipe);
-	
-	// banyak turn atau giliran
-	int n;
-	scanf("%d", &n);
-	
-	// banyak teman
-	int m;
-	scanf("%d", &m);
-	
-	char Fnama[m][129], Frank[m][129], Ftipe[m][129];
-	int Fhp[m], Fdamage[m];
-	for(int i = 0; i < m; i++){
-		scanf("%s %d %d %s %s", Fnama[i], &Fhp[i], &Fdamage[i], Frank[i], Ftipe[i]);
-	}
-	
-	// tipe sorting
-	char sort[17];
-	scanf(" %s", sort);
-	
-	int h = 0; // menandai banyak turn yang di lakukan
-	int l = 1; // menandai apakah ada sisa Enemy HP (Ehp)
-	
-	//prosedur untuk bagian terjadinya pertarungan
-	pertarungan(&h, n, &l, nama, hp, damage, tipe, Ehp, Edamage, Etipe);
-	
-	//prosedur yang menentukan akhir dunia
-	endWorld(&h, n, &l, sort, Ehp, nama, Fnama, hp, Fhp, rank, Frank, damage, Fdamage, tipe, Ftipe);
-	return 0;
 }
