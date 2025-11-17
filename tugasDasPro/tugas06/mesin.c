@@ -61,7 +61,7 @@ void pertarungan(int *h, int n, int *l, char nama[][129], int hp[], int damage[]
 		printf("\n");
 		// prosedur untuk memperlihatkan status musuh Enemy Status(Estatus)
 		Estatus(Ehp, l);
-		*h++;
+		*h += 1;
 	}
 }
 

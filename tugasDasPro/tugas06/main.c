@@ -45,8 +45,8 @@ void Estatus(int Ehp, int *l){
 	}
 }
 
-void pertarungan(int *h, int n, int *l, char nama[][129], int hp[], int damage[], char tipe[][129], int Ehp, int Edamage, char Etipe[]){
-	while((*h < n) && (Ehp >= 0)){
+int pertarungan(int h, int n, int *l, char nama[][129], int hp[], int damage[], char tipe[][129], int Ehp, int Edamage, char Etipe[]){
+	while((h < n) && (Ehp >= 0)){
 		printf("+--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--+\n");
 		printf("Saatnya menyerang Kege1apan (> ^ <)\n");
 		for(int i = 0; i < 3; i++){
@@ -69,11 +69,32 @@ void pertarungan(int *h, int n, int *l, char nama[][129], int hp[], int damage[]
 		printf("\n");
 		// prosedur untuk memperlihatkan status musuh Enemy Status(Estatus)
 		Estatus(Ehp, l);
-		*h++;
+		h++;
 	}
+	return h;
 }
+/*
+void bubble(){
+	int i; int temp; int tukar;
+	do{
+		inisialisasi nilai tukar sebelum ada pertukaran diset false
+		tukar = 0;
+		pengulangan dan memeriksa apakah ada pertukaran
+			for(i = 0; i <(); i++){
+			/*jika ada nilai yang dipertukarkan
+			if(tabInt[i] > tabInt[i+1]){
+				menukar posisi elemen
+				temp = hp[i];
+				hp[i] = hp[i+1];
+				hp[i+1] = temp;
+				tukar = 1;
+			}
+		}
+	}while(tukar == 1);
+}
+*/
 
-void endWorld(int *h, int n, int *l, char sort[], int Ehp, char nama[][129], char Fnama[][129], int hp[], int Fhp[], char rank[][129], char Frank[][129], int damage[], int Fdamage[], char tipe[][129], char Ftipe[][129]){
+void endWorld(int h, int n, int *l, char sort[], int Ehp, char nama[][129], char Fnama[][129], int hp[], int Fhp[], char rank[][129], char Frank[][129], int damage[], int Fdamage[], char tipe[][129], char Ftipe[][129]){
 	printf("+--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--++--+--+--+\n");
 	int decide = 3; // penanda kalau semua Hp masih lebih besar dari 0
 	for(int i = 0; i < 3; i++){
@@ -82,21 +103,19 @@ void endWorld(int *h, int n, int *l, char sort[], int Ehp, char nama[][129], cha
 		}
 	}
 	
-	int *Pn = &n;
-	printf("%d %d", *h, n);
 	printf("\n");
 	//pengkondisian untuk akhir dunia
 	if(*l <= 0){
 		printf("Yeayy, kita memang anak anak terpilih\n");
 	}else if(decide == 0){
 		printf("Nooo, dunia akan hancur\n");
-	}else if(*h == *Pn){
+	}else if(h == n){
 		printf("Siall, Myostismoon Kabur\n");
 	}
 	
 	printf("\n[Kumpulkan semua digimon kalian anak - anak terpilih!!!]\n");
 	if(strcmp(sort, "bubble") == 0){
-		
+		bubble();
 	}else if(strcmp(sort, "selection") == 0){
 		
 	}else if(strcmp(sort, "insertion") == 0){
@@ -142,9 +161,9 @@ int main(){
 	int l = 1; // menandai apakah ada sisa Enemy HP (Ehp)
 	
 	//prosedur untuk bagian terjadinya pertarungan
-	pertarungan(&h, n, &l, nama, hp, damage, tipe, Ehp, Edamage, Etipe);
-	
+	h = pertarungan(h, n, &l, nama, hp, damage, tipe, Ehp, Edamage, Etipe);
+
 	//prosedur yang menentukan akhir dunia
-	endWorld(&h, n, &l, sort, Ehp, nama, Fnama, hp, Fhp, rank, Frank, damage, Fdamage, tipe, Ftipe);
+	endWorld(h, n, &l, sort, Ehp, nama, Fnama, hp, Fhp, rank, Frank, damage, Fdamage, tipe, Ftipe);
 	return 0;
 }
