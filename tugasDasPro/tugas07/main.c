@@ -7,8 +7,8 @@
 #include <string.h>
 
 typedef struct{
-	char name[], id[], cls[];
-	int sacri[];
+	char name[257], id[65], cls[65];
+	int sacri;
 }atr;
 
 void anggela(int upS, int midS, int lowS,
@@ -23,18 +23,18 @@ void anggela(int upS, int midS, int lowS,
 
 int main(){
 	// input banyak upper sephirah
-	int upS;
-	scanf("%d", &upS);
+	int upS_idx;
+	scanf("%d", &upS_idx);
 	
 	// atribut yang dibawa upper sephirah & loop input
 	/*
 	char name_upS[upS][257], id_upS[upS][65], cls_upS[upS][65];
 	int sacri_upS[upS];
 	*/
-	atr upS[];
-	upS[].name[], upS[].id[], upS[].cls[], ups[].sacri;
-	for(int i = 0; i < upS; i++){
-		scanf("%s %s %s %d", name_upS[i], id_upS[i], cls_upS[i], &sacri_upS[i]);
+	atr upS[upS_idx];
+	upS[upS_idx].name[257], upS[upS_idx].id[65], upS[upS_idx].cls[65], upS[upS_idx].sacri;
+	for(int i = 0; i < upS_idx; i++){
+		scanf("%s %s %s %d", upS[i].name, upS[i].id, upS[i].cls, upS[i].sacri);
 	}
 
 	// input middle sephirah
