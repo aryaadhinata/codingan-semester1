@@ -146,6 +146,39 @@ void mergeArr(int first, int second, atr satu[], atr dua[], atr arrMerge[]){
     }
 }
 
+void tabbleAngela(sum_idx2, mergeFF){
+	printf("Abnormalities List:\n");
+	
+	// menghitung panjang array nama yanhg paling panjang
+	int leght_name = strlen(mergeFF[0].name);
+	for(int i = 1; i < leght_name; i++){
+		if(strlen(mergeFF[i].name > leght_name)){
+			leght_name = strlen(mergeFF[i].name);
+		}
+	}
+
+	// menghitung panjang array id yanhg paling panjang
+	int leght_id = strlen(mergeFF[0].id);
+	for(int i = 1; i < leght_id; i++){
+		if(strlen(mergeFF[i].id > leght_id)){
+			leght_name = strlen(mergeFF[i].id);
+		}
+	}
+
+	// menghitung yang paling banyak digitnya di korban 
+	int leght_sacri = 1;
+	for(int i = 1; i < leght_name; i++){
+		int digit = 0;
+		while(mergeFF[i].sacri >= 1){
+			mergeFF[i]. sacri % 10;
+			digit++
+		}
+		if(leght_sacri < digit){
+			leght_sacri = digit;
+		}
+	}
+}
+
 void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
 	// memanggil void yang akan menandai rank dari setiap entitas
 	ranking(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
@@ -162,11 +195,13 @@ void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr 
 	int sum_idx = upS_idx + midS_idx + lowS_idx;
 */	
 	
+	// bagian memanggil prosedur untuk melakukan sorting
 	quickSortPivotPinggir(0, upS_idx-1, upS);
 	quickSortPivotPinggir(0, midS_idx-1, midS);
 	quickSortPivotPinggir(0, lowS_idx-1, lowS);
 
-
+	
+	// disini ada bagiann salah aku rasa kayak kurang sesuatu jadi yang terakhir nggak di bandingin
 	int sum_idx1 = upS_idx + midS_idx;
 	int sum_idx2 = sum_idx1 + lowS_idx;
 	atr mergeF[sum_idx1];
@@ -175,9 +210,12 @@ void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr 
 	mergeArr(upS_idx, midS_idx, upS, midS, mergeF);
 	mergeArr(sum_idx1, lowS_idx, mergeF, lowS, mergeFF);
 
+	tabbleAngela(sum_idx2, mergeFF);
+/*
 	for(int i = 0; i < sum_idx2; i++){
 		printf("%s %s %d\n", mergeFF[i].name, mergeFF[i].cls, mergeFF[i].sacri);
 	}
+*/
 }
 
 int main(){
