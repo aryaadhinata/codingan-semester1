@@ -16,6 +16,7 @@ typedef struct{ // struct yang akan digunakan dalam program
 	lebih mudah.
 */
 void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
+	//melakukan loop untuk  bagian upS
 	for(int i = 0; i < upS_idx; i++){
 		if(strcmp(upS[i].cls, "ALEPH") == 0){
 			upS[i].rank = 0;
@@ -30,6 +31,7 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 		}
 	}
 	
+	//melakukan loop untuk  bagian upS
 	for(int i = 0; i < midS_idx; i++){
 		if(strcmp(midS[i].cls, "ALEPH") == 0){
 			midS[i].rank = 0;
@@ -44,6 +46,7 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 		}
 	}
 	
+	//melakukan loop untuk  bagian lowers
 	for(int i = 0; i < lowS_idx; i++){
 		if(strcmp(lowS[i].cls, "ALEPH") == 0){
 			lowS[i].rank = 0;
@@ -145,36 +148,78 @@ void mergeArr(int first, int second, atr satu[], atr dua[], atr arrMerge[]){
         idx3++;
     }
 }
-
-void tabbleAngela(sum_idx2, mergeFF){
+/*
+	prosedur untuk menampilkan apa yang diingan angela
+*/
+void tabbleAngela(int sum_idx2, atr mergeFF[]){
 	printf("Abnormalities List:\n");
 	
 	// menghitung panjang array nama yanhg paling panjang
-	int leght_name = strlen(mergeFF[0].name);
-	for(int i = 1; i < leght_name; i++){
-		if(strlen(mergeFF[i].name > leght_name)){
+	int leght_name = 5;
+	for(int i = 0; i < sum_idx2; i++){
+		if(strlen(mergeFF[i].name) > leght_name){
 			leght_name = strlen(mergeFF[i].name);
 		}
 	}
 
 	// menghitung panjang array id yanhg paling panjang
-	int leght_id = strlen(mergeFF[0].id);
-	for(int i = 1; i < leght_id; i++){
-		if(strlen(mergeFF[i].id > leght_id)){
+	int leght_id = 8;
+	for(int i = 0; i < sum_idx2; i++){
+		if(strlen(mergeFF[i].id) > leght_id){
 			leght_name = strlen(mergeFF[i].id);
 		}
 	}
 
-	// menghitung yang paling banyak digitnya di korban 
-	int leght_sacri = 1;
-	for(int i = 1; i < leght_name; i++){
+	// menghitung korban yang paling banyak digitnya
+	int leght_sacri = 7;
+	for(int i = 1; i < sum_idx2; i++){
 		int digit = 0;
 		while(mergeFF[i].sacri >= 1){
 			mergeFF[i]. sacri % 10;
-			digit++
+			digit++;
 		}
 		if(leght_sacri < digit){
 			leght_sacri = digit;
+		}
+	}
+	
+	for(int i = 0; i <= sum_idx2; i++){
+		if(i == 0 || i == 2 || i == sum_idx2){
+			printf("*");
+			for(int j = 0; j < leght_name + 1; j++){
+				printf("-");
+			}
+			
+			printf("*");
+			for(int j = 0; j < leght_id + 1; j++){
+				printf("-");
+			}
+			
+			printf("*");
+			for(int j = 0; j < leght_sacri + 1; j++){
+				printf("-");
+			}
+			printf("\n");
+		}
+		
+		if(i == 1){
+			printf("| Nama");
+			for(int j = 0; j < leght_name - 5; j++){
+				printf(" ");
+			}
+			
+			printf("| ID");
+			for(int j = 0; j < leght_id - 3; j++){
+				printf(" ");
+			}
+			
+			printf("| Klasifikasi ");
+			
+			printf("| Korban");
+			for(int j = 0; j < leght_sacri - 6; j++){
+				printf(" ");
+			}
+			printf("\n");
 		}
 	}
 }
