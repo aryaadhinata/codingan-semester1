@@ -11,6 +11,16 @@ typedef struct{
 	int sacri;
 }atr;
 
+void angela(int upS_idx, char upS[].cls[65], int upS[].sacri, char upS[].name[257], char upS[].id[65],
+	int midS_idx, int lowS_idx){
+	
+	for(int i = 0; i < upS_idx; i++){
+		
+	}
+	
+	int sum_idx = upS_idx + midS_idx + lowS_idx;
+}
+
 int main(){
 	// input banyak upper sephirah
 	int upS_idx;
@@ -60,5 +70,6 @@ int main(){
 	int sacri_min;
 	scanf("%d", &sacri_min);
 
+	angela(upS_idx, upS.cls, upS.sacri, upS.name, upS.id, midS_idx, lowS_idx);
 	return 0;
 }
