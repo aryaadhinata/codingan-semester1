@@ -11,12 +11,48 @@ typedef struct{
 	int sacri;
 }atr;
 
-void angela(int upS_idx, char upS[].cls[65], int upS[].sacri, char upS[].name[257], char upS[].id[65],
-	int midS_idx, int lowS_idx){
+int quickSortPivotPinggir(int l, int r, atr arr[]){
+	int i; int j; char temp[513];
+	i = l; j = r;
+	char urut[5][17] = {"ALEPH", "WAW", "HE", "TETH", "ZAYIN"};
 	
-	for(int i = 0; i < upS_idx; i++){
+	do{
 		
+	}while(i < j);
+	
+	/*
+	do{
+		while((arr[i] < arr[r]) && (i<=j)){
+			// mencegah i berjalan terlalu jauh melewati batas j
+			i = i + 1;
+		}
+		while((arr[j] > tabInt[l]) && (i<=j)){
+			// mencegah i berjalan terlalu jauh melewati batas i
+			j = j - 1;
+		}
+
+		if(i < j){
+			temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
+			i = i + 1;
+			j = j - 1;
+		}
+	}while(i < j);
+	
+	if(l < j){
+		quickSortPivotPinggir(l, j, arr);
 	}
+	if(i<r){
+		quickSortPivotPinggir(i, r, arr);
+	}
+	*/
+}
+
+void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
+	upS = quickSortPivotPinggir(0, upS_idx, upS);
+	midS = quickSortPivotPinggir(0, midS_idx, midS);
+	lowS = quickSortPivotPinggir(0, lowS_idx, lowS);
 	
 	int sum_idx = upS_idx + midS_idx + lowS_idx;
 }
@@ -28,7 +64,6 @@ int main(){
 	
 	// atribut yang dibawa upper sephirah & loop input
 	atr upS[upS_idx];
-	upS[upS_idx].name[257], upS[upS_idx].id[65], upS[upS_idx].cls[65], upS[upS_idx].sacri;
 	for(int i = 0; i < upS_idx; i++){
 		scanf("%s %s %s %d", upS[i].name, upS[i].id, upS[i].cls, &upS[i].sacri);
 	}
@@ -39,7 +74,6 @@ int main(){
 	
 	// atribut yang di bawa middle sephirah & loop input
 	atr midS[midS_idx];
-	midS[midS_idx].name[257], midS[midS_idx].id[65], midS[upS_idx].cls[65], midS[midS_idx].sacri;
 	for(int i = 0; i < midS_idx; i++){
 		scanf("%s %s %s %d", midS[i].name, midS[i].id, midS[i].cls, &midS[i].sacri);
 	}
@@ -50,7 +84,6 @@ int main(){
 	
 	// atribut yang dibawa lower sephirah & loop input
 	atr lowS[lowS_idx];
-	lowS[lowS_idx].name[257], lowS[lowS_idx].id[65], lowS[lowS_idx].cls[65], lowS[lowS_idx].sacri;
 	for(int i = 0; i < lowS_idx; i++){
 		scanf("%s %s %s %d", lowS[i].name, lowS[i].id, lowS[i].cls, &lowS[i].sacri);
 	}
@@ -70,6 +103,6 @@ int main(){
 	int sacri_min;
 	scanf("%d", &sacri_min);
 
-	angela(upS_idx, upS.cls, upS.sacri, upS.name, upS.id, midS_idx, lowS_idx);
+	angela(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
 	return 0;
 }
