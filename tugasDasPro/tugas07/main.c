@@ -6,23 +6,40 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct{
+typedef struct{ // struct yang akan digunakan dalam program
 	char name[257], id[65], cls[65];
-	int sacri;
+	int sacri, rank;
 }atr;
 
+/*
+	bagian ini untuk mennadai rankingnya agar nanti  ketika yang di compare
+	lebih mudah.
+*/
+void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
+	for(int i = 0; i < upS_idx; i++){
+		if(strcmp(upS[i].cls, "ALEPH") == 0){
+			upS[i].rank = 0;
+		}else if(strcmp(upS[i].cls, "WAW") == 0){
+			upS[i].rank = 1;
+		}else if(strcmp(upS[i].cls, "HE") == 0){
+			upS[i].rank = 2;
+		}else if(strcmp(upS[i].cls, "TETH") == 0){
+			upS[i].rank = 3;
+		}else if(strcmp(upS[i].cls, "ZAYIN") == 0){
+			upS[i].rank = 4;
+		}
+	}
+}
+
+/*
+	melalkukan sorting tetapi belum selesai!
+*/
 int quickSortPivotPinggir(int l, int r, atr arr[]){
 	int i; int j; char temp[513];
 	i = l; j = r;
-	char urut[5][17] = {"ALEPH", "WAW", "HE", "TETH", "ZAYIN"};
-	
+
 	do{
-		
-	}while(i < j);
-	
-	/*
-	do{
-		while((arr[i] < arr[r]) && (i<=j)){
+		while((arr[i] > urut[r]) && (i<=j)){
 			// mencegah i berjalan terlalu jauh melewati batas j
 			i = i + 1;
 		}
@@ -46,13 +63,15 @@ int quickSortPivotPinggir(int l, int r, atr arr[]){
 	if(i<r){
 		quickSortPivotPinggir(i, r, arr);
 	}
-	*/
 }
 
 void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
-	upS = quickSortPivotPinggir(0, upS_idx, upS);
-	midS = quickSortPivotPinggir(0, midS_idx, midS);
-	lowS = quickSortPivotPinggir(0, lowS_idx, lowS);
+	// memanggil void yang akan menandai rank dari setiap entitas
+	ranking(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
+	
+	quickSortPivotPinggir(0, upS_idx, upS);
+	quickSortPivotPinggir(0, midS_idx, midS);
+	quickSortPivotPinggir(0, lowS_idx, lowS);
 	
 	int sum_idx = upS_idx + midS_idx + lowS_idx;
 }
@@ -102,7 +121,8 @@ int main(){
 	// input nilai miminimal korban yang ingin di tampilkan
 	int sacri_min;
 	scanf("%d", &sacri_min);
-
+	
+	// bagian void yang digunakan untuk menampilkan permintaan angela
 	angela(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
 	return 0;
 }
