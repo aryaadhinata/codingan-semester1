@@ -63,23 +63,23 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 	melalkukan sorting tetapi belum selesai!
 */
 int quickSortPivotPinggir(int l, int r, atr arr[]){
-	int i; int j; char temp[513];
+	int i; int j; atr temp;
 	i = l; j = r;
 
 	do{
-		while((arr.rank[i] > arr.rank[r]) && (i <= j)){
+		while((arr[i].rank > arr[r].rank) && (i <= j)){
 			// mencegah i berjalan terlalu jauh melewati batas j
 			i = i + 1;
 		}
-		while((arr.rank[j] > arr.rank[l]) && (i<=j)){
+		while((arr[j].rank > arr[l].rank) && (i<=j)){
 			// mencegah i berjalan terlalu jauh melewati batas i
 			j = j - 1;
 		}
 
 		if(i < j){
-			temp = arr[i].rank;
-			arr[i].rank = arr[j].rank;
-			arr[j].rank = temp;
+			temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
 			i = i + 1;
 			j = j - 1;
 		}
