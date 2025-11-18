@@ -60,22 +60,36 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 }
 
 /*
-	melalkukan sorting tetapi belum selesai!
+	melalkukan sorting dengan menggunakan quick sort pivot pinggir
 */
 int quickSortPivotPinggir(int l, int r, atr arr[]){
 	int i; int j; atr temp;
 	i = l; j = r;
 
 	do{
-		while((arr[i].rank > arr[r].rank) && (i <= j)){
+		/*
+			pengkondisian untukk bagian pengurutan untuk i
+		*/
+		while((arr[i].rank < arr[r].rank || (arr[i].rank == arr[r].rank && arr[i].sacri > arr[r].sacri) ||
+		arr[i].rank == arr[r].rank && arr[i].sacri == arr[r].sacri && strcmp(arr[i].name, arr[r].name) < 0 ) 
+		&& (i <= j)){
 			// mencegah i berjalan terlalu jauh melewati batas j
 			i = i + 1;
 		}
-		while((arr[j].rank > arr[l].rank) && (i<=j)){
+		
+		/*
+			pengkondisian untukk bagian pengurutan untuk j
+		*/
+		while((arr[j].rank > arr[l].rank || (arr[j].rank == arr[l].rank && arr[j].sacri < arr[l].sacri) ||
+		arr[j].rank == arr[l].rank && arr[j].sacri == arr[l].sacri && strcmp(arr[j].name, arr[l].name) > 0) 
+		&& (i <= j)){
 			// mencegah i berjalan terlalu jauh melewati batas i
 			j = j - 1;
 		}
 
+		/*
+			bagian penukaran
+		*/
 		if(i < j){
 			temp = arr[i];
 			arr[i] = arr[j];
@@ -85,23 +99,85 @@ int quickSortPivotPinggir(int l, int r, atr arr[]){
 		}
 	}while(i < j);
 	
+	/*
+		bagian untuk merekursif
+	*/
 	if(l < j){
 		quickSortPivotPinggir(l, j, arr);
 	}
-	if(i<r){
+	if(i < r){
 		quickSortPivotPinggir(i, r, arr);
 	}
+}
+
+void mergeArr(int first, int second, atr satu[], atr dua[], atr arrMerge[]){
+	// deklarasi dan inisialisasi index untuk ketiga array
+    int idx1 = 0, idx2 = 0, idx3 = 0;
+    // loop sampai arr1 atau arr2 habis (salah satunya dulu)
+    while(idx1 < first && idx2 < second){
+        // jika elemen arr1 lebih kecil dari arr2
+        if((satu[idx1].rank < dua[idx2].rank) || ((satu[idx1].rank == dua[idx2].rank) && (satu[idx1].sacri > dua[idx2].sacri)) ||
+		((satu[idx1].rank == dua[idx2].rank) && (satu[idx1].sacri == dua[idx2].sacri) && (strcmp(satu[idx1].name, dua[idx2].name) < 0))){
+            // masukan elemen tersebut ke arr3
+            arrMerge[idx3] = satu[idx1];
+            idx1++;
+        }else{
+        // jika elemen arr2 lebih kecil dari arrar
+            // masukan elemen tersebut ke arr3
+            arrMerge[idx3] = dua[idx2];
+            idx2++;
+        }
+        // iterasi untuk index arr3
+        idx3++;
+    }
+
+
+    // jika ada sisa di arr1, maka masukan ke arr3
+    while(idx1 < first){
+        arrMerge[idx3] = satu[idx1];
+        idx1++;
+        idx3++;
+    }
+    // jika ada sisa di arr2, maka masukan ke arr3
+    while(idx2 < second){
+        arrMerge[idx3] = dua[idx2];
+        idx2++;
+        idx3++;
+    }
 }
 
 void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
 	// memanggil void yang akan menandai rank dari setiap entitas
 	ranking(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
-	
-	quickSortPivotPinggir(0, upS_idx, upS);
-	quickSortPivotPinggir(0, midS_idx, midS);
-	quickSortPivotPinggir(0, lowS_idx, lowS);
-	
+/*
+	for(int i = 0; i < upS_idx; i++){
+		printf("%s %s\n", upS[i].name, upS[i].cls);
+	}
+	for(int i = 0; i < midS_idx; i++){
+		printf("%s %s\n", midS[i].name, midS[i].cls);
+	}
+	for(int i = 0; i < lowS_idx; i++){
+		printf("%s %s\n", lowS[i].name, lowS[i].cls);
+	}
 	int sum_idx = upS_idx + midS_idx + lowS_idx;
+*/	
+	
+	quickSortPivotPinggir(0, upS_idx-1, upS);
+	quickSortPivotPinggir(0, midS_idx-1, midS);
+	quickSortPivotPinggir(0, lowS_idx-1, lowS);
+
+
+	int sum_idx1 = upS_idx + midS_idx;
+	int sum_idx2 = sum_idx1 + lowS_idx;
+	atr mergeF[sum_idx1];
+	atr mergeFF[sum_idx2];
+	printf("ada-%d indeks\n", sum_idx2);
+	mergeArr(upS_idx, midS_idx, upS, midS, mergeF);
+	mergeArr(sum_idx1, lowS_idx, mergeF, lowS, mergeFF);
+
+	for(int i = 0; i < sum_idx2; i++){
+		printf("%s %s %d\n", mergeFF[i].name, mergeFF[i].cls, mergeFF[i].sacri);
+	}
 }
 
 int main(){
@@ -149,6 +225,19 @@ int main(){
 	// input nilai miminimal korban yang ingin di tampilkan
 	int sacri_min;
 	scanf("%d", &sacri_min);
+/*
+	for(int i = 0; i < upS_idx; i++){
+		printf("%s %s\n", upS[i].name, upS[i].cls);
+	}
+	for(int i = 0; i < midS_idx; i++){
+		printf("%s %s\n", midS[i].name, midS[i].cls);
+	}
+	for(int i = 0; i < lowS_idx; i++){
+		printf("%s %s\n", lowS[i].name, lowS[i].cls);
+	}
+	int sum_idx = upS_idx + midS_idx + lowS_idx;
+*/	
+	
 	
 	// bagian void yang digunakan untuk menampilkan permintaan angela
 	angela(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
