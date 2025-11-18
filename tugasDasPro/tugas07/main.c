@@ -29,6 +29,34 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 			upS[i].rank = 4;
 		}
 	}
+	
+	for(int i = 0; i < midS_idx; i++){
+		if(strcmp(midS[i].cls, "ALEPH") == 0){
+			midS[i].rank = 0;
+		}else if(strcmp(midS[i].cls, "WAW") == 0){
+			midS[i].rank = 1;
+		}else if(strcmp(midS[i].cls, "HE") == 0){
+			midS[i].rank = 2;
+		}else if(strcmp(midS[i].cls, "TETH") == 0){
+			midS[i].rank = 3;
+		}else if(strcmp(midS[i].cls, "ZAYIN") == 0){
+			midS[i].rank = 4;
+		}
+	}
+	
+	for(int i = 0; i < lowS_idx; i++){
+		if(strcmp(lowS[i].cls, "ALEPH") == 0){
+			lowS[i].rank = 0;
+		}else if(strcmp(upS[i].cls, "WAW") == 0){
+			lowS[i].rank = 1;
+		}else if(strcmp(lowS[i].cls, "HE") == 0){
+			lowS[i].rank = 2;
+		}else if(strcmp(lowS[i].cls, "TETH") == 0){
+			lowS[i].rank = 3;
+		}else if(strcmp(lowS[i].cls, "ZAYIN") == 0){
+			lowS[i].rank = 4;
+		}
+	}
 }
 
 /*
@@ -39,19 +67,19 @@ int quickSortPivotPinggir(int l, int r, atr arr[]){
 	i = l; j = r;
 
 	do{
-		while((arr[i] > urut[r]) && (i<=j)){
+		while((arr.rank[i] > arr.rank[r]) && (i <= j)){
 			// mencegah i berjalan terlalu jauh melewati batas j
 			i = i + 1;
 		}
-		while((arr[j] > tabInt[l]) && (i<=j)){
+		while((arr.rank[j] > arr.rank[l]) && (i<=j)){
 			// mencegah i berjalan terlalu jauh melewati batas i
 			j = j - 1;
 		}
 
 		if(i < j){
-			temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
+			temp = arr[i].rank;
+			arr[i].rank = arr[j].rank;
+			arr[j].rank = temp;
 			i = i + 1;
 			j = j - 1;
 		}
