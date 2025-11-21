@@ -169,40 +169,52 @@ void tabbleAngela(int sum_idx2, atr mergeFF[]){
 			leght_name = strlen(mergeFF[i].id);
 		}
 	}
-
+	
+	// panjang untuk klasifikasinya
+	int leght_clas = strlen("klasifikasi");
+	
 	// menghitung korban yang paling banyak digitnya
 	int leght_sacri = 7;
+	/*	bagian ini ada salah
 	for(int i = 1; i < sum_idx2; i++){
 		int digit = 0;
 		while(mergeFF[i].sacri >= 1){
-			mergeFF[i]. sacri % 10;
+			mergeFF[i].sacri % 10;
 			digit++;
 		}
 		if(leght_sacri < digit){
 			leght_sacri = digit;
 		}
 	}
+	*/
 	
-	for(int i = 0; i <= sum_idx2; i++){
+	printf("%d %d %d\n", leght_name, leght_id, leght_sacri);
+	for(int i = 0; i <= sum_idx2 + 4; i++){
 		if(i == 0 || i == 2 || i == sum_idx2){
 			printf("*");
-			for(int j = 0; j < leght_name + 1; j++){
+			for(int j = 0; j < leght_name; j++){
 				printf("-");
 			}
 			
 			printf("*");
-			for(int j = 0; j < leght_id + 1; j++){
+			for(int j = 0; j < leght_id; j++){
 				printf("-");
 			}
 			
+			printf("*");
+			for(int i = 0; i < leght_clas + 2; i++){
+				printf("-");
+			}
+
 			printf("*");
 			for(int j = 0; j < leght_sacri + 1; j++){
 				printf("-");
 			}
+			
+			printf("*");
 			printf("\n");
-		}
-		
-		if(i == 1){
+			
+		}else if(i == 1){
 			printf("| Nama");
 			for(int j = 0; j < leght_name - 5; j++){
 				printf(" ");
@@ -219,6 +231,7 @@ void tabbleAngela(int sum_idx2, atr mergeFF[]){
 			for(int j = 0; j < leght_sacri - 6; j++){
 				printf(" ");
 			}
+			printf("|");
 			printf("\n");
 		}
 	}
@@ -248,19 +261,19 @@ void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr 
 	
 	// disini ada bagiann salah aku rasa kayak kurang sesuatu jadi yang terakhir nggak di bandingin
 	int sum_idx1 = upS_idx + midS_idx;
-	int sum_idx2 = sum_idx1 + lowS_idx;
 	atr mergeF[sum_idx1];
-	atr mergeFF[sum_idx2];
-	printf("ada-%d indeks\n", sum_idx2);
 	mergeArr(upS_idx, midS_idx, upS, midS, mergeF);
+	
+	int sum_idx2 = sum_idx1 + lowS_idx;
+	atr mergeFF[sum_idx2];
 	mergeArr(sum_idx1, lowS_idx, mergeF, lowS, mergeFF);
 
 	tabbleAngela(sum_idx2, mergeFF);
-/*
+	/*
 	for(int i = 0; i < sum_idx2; i++){
 		printf("%s %s %d\n", mergeFF[i].name, mergeFF[i].cls, mergeFF[i].sacri);
 	}
-*/
+	*/
 }
 
 int main(){

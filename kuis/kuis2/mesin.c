@@ -193,6 +193,7 @@ void sort(int arr1_idx, int arr2_idx, int arr3_idx, bio arr1[], bio arr2[], bio 
 		quickSortPivotPinggir(0, arr1_idx - 1, arr1);
 		quickSortPivotPinggir(0, arr2_idx - 1, arr2);
 		quickSortPivotPinggir(0, arr3_idx - 1, arr3);
+		quickSortPivotPinggir(0, arr3_idx - 1, arr3);
 	}else{
 		selectionSort(arr1_idx, arr1);
 		selectionSort(arr2_idx, arr2);
@@ -208,6 +209,10 @@ void sort(int arr1_idx, int arr2_idx, int arr3_idx, bio arr1[], bio arr2[], bio 
 	int merge_idx2 = merge_idx1 + arr3_idx;
 	bio merge2[merge_idx2];
 	mergeArr(merge_idx1, arr3_idx, merge1, arr3, merge2);
+	
+	if(strcmp(metSort, "quick") == 0){
+		quickSortPivotPinggir(0, merge_idx2 - 1, merge2); // saya tahu ini salah tapi ini cara ijo yang terpikirkan
+	}
 	
 	// prosedur yang akan memnunculkan output
 	print(merge_idx2, merge2, target, maksTamp);
