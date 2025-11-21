@@ -50,7 +50,7 @@ void ranking(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr
 	for(int i = 0; i < lowS_idx; i++){
 		if(strcmp(lowS[i].cls, "ALEPH") == 0){
 			lowS[i].rank = 0;
-		}else if(strcmp(upS[i].cls, "WAW") == 0){
+		}else if(strcmp(lowS[i].cls, "WAW") == 0){
 			lowS[i].rank = 1;
 		}else if(strcmp(lowS[i].cls, "HE") == 0){
 			lowS[i].rank = 2;
@@ -151,6 +151,20 @@ void mergeArr(int first, int second, atr satu[], atr dua[], atr arrMerge[]){
 /*
 	prosedur untuk menampilkan apa yang diingan angela
 */
+
+int leghtKorban(int n){
+	if(n == 0){
+		return 1;
+	}else{
+		int count = 0;
+		while(n != 0){
+			n /= 10;
+			count++;
+		}
+		return count;
+	}
+}
+
 void tabbleAngela(int sum_idx2, atr mergeFF[]){
 	printf("Abnormalities List:\n");
 	
@@ -172,32 +186,30 @@ void tabbleAngela(int sum_idx2, atr mergeFF[]){
 	
 	// panjang untuk klasifikasinya
 	int leght_clas = strlen("klasifikasi");
+	for(int i = 0; i < sum_idx2; i++){
+		if(strlen(mergeFF[i].cls) > leght_clas){
+			leght_clas = strlen(mergeFF[i].cls);
+		}
+	}
 	
 	// menghitung korban yang paling banyak digitnya
 	int leght_sacri = 7;
-	/*	bagian ini ada salah
-	for(int i = 1; i < sum_idx2; i++){
-		int digit = 0;
-		while(mergeFF[i].sacri >= 1){
-			mergeFF[i].sacri % 10;
-			digit++;
-		}
-		if(leght_sacri < digit){
-			leght_sacri = digit;
+	for(int i = 0; i < sum_idx2; i++){
+		if(leght_sacri < leghtKorban(mergeFF[i].sacri)){
+			leght_sacri = leghtKorban(mergeFF[i].sacri);		
 		}
 	}
-	*/
 	
-	printf("%d %d %d\n", leght_name, leght_id, leght_sacri);
-	for(int i = 0; i <= sum_idx2 + 4; i++){
-		if(i == 0 || i == 2 || i == sum_idx2){
+	// printf("%d %d %d\n", leght_name, leght_id, leght_sacri);
+	for(int i = 0; i <= sum_idx2 + 3; i++){
+		if(i == 0 || i == 2 || i == sum_idx2 + 3){
 			printf("*");
-			for(int j = 0; j < leght_name; j++){
+			for(int j = 0; j < leght_name + 2; j++){
 				printf("-");
 			}
 			
 			printf("*");
-			for(int j = 0; j < leght_id; j++){
+			for(int j = 0; j < leght_id + 1; j++){
 				printf("-");
 			}
 			
@@ -207,7 +219,7 @@ void tabbleAngela(int sum_idx2, atr mergeFF[]){
 			}
 
 			printf("*");
-			for(int j = 0; j < leght_sacri + 1; j++){
+			for(int j = 0; j < leght_sacri + 2; j++){
 				printf("-");
 			}
 			
@@ -216,28 +228,118 @@ void tabbleAngela(int sum_idx2, atr mergeFF[]){
 			
 		}else if(i == 1){
 			printf("| Nama");
-			for(int j = 0; j < leght_name - 5; j++){
+			for(int j = 0; j < leght_name - 3; j++){
 				printf(" ");
 			}
 			
 			printf("| ID");
-			for(int j = 0; j < leght_id - 3; j++){
+			for(int j = 0; j < leght_id - 2; j++){
 				printf(" ");
 			}
 			
-			printf("| Klasifikasi ");
+			printf("| Klasifikasi");
+			for(int j = 0; j < leght_clas - 10; j++){
+				printf(" ");
+			}
 			
 			printf("| Korban");
-			for(int j = 0; j < leght_sacri - 6; j++){
+			for(int j = 0; j < leght_sacri - 5; j++){
 				printf(" ");
 			}
 			printf("|");
 			printf("\n");
+		}else{
+			printf("| %s ", mergeFF[i-3].name);
+			if(strlen(mergeFF[i-3].name) < leght_name){
+				int sisa = leght_name - strlen(mergeFF[i-3].name);
+				for(int j = 0; j < sisa; j++){
+					printf(" ");
+				}
+			}
+
+			printf("| %s", mergeFF[i-3].id);
+			if(strlen(mergeFF[i-3].id) < leght_id){
+				int sisa = leght_id - strlen(mergeFF[i-3].id);
+				for(int j = 0; j < sisa; j++){
+					printf(" ");
+				}
+			}
+
+			printf("| %s ", mergeFF[i-3].cls);
+			if(strlen(mergeFF[i-3].cls) < leght_clas){
+				int sisa = leght_clas - strlen(mergeFF[i-3].cls);
+				for(int j = 0; j < sisa; j++){
+					printf(" ");
+				}
+			}
+			
+			printf("| %d", mergeFF[i-3].sacri);
+			if(leght_sacri > leghtKorban(mergeFF[i-3].sacri)){
+				int sisa = leght_sacri - leghtKorban(mergeFF[i-3].sacri);
+				for(int j = 0; j < sisa; j++){
+					printf(" ");
+				}
+			}
+			printf(" |\n");
+		}
+	}
+	printf("-->Sending To Angela\n");
+}
+
+int sequentialSearch(int i, int sus_idx, atr mergeFF[], atr sus[]){
+    // deklarasi found dan idx
+    int found = -1;      // buat flag
+    int idx = 0;        // buat index
+
+
+    // loop sampai ketemu elemen
+    while(idx <= sus_idx && found == -1){
+        // jika elemen ketemu maka set found ke 1
+        if(strcmp(mergeFF[idx].id, sus[i].id) == 0){
+            found = idx;
+        }
+        // jika tidak maka iterasi index
+        else{
+            idx++;
+        }
+    }
+    // return found (bisa juga return indexnya)
+    return found;
+}
+
+void searchYesod(int sum_idx2, atr mergeFF[], int sus_idx, atr sus[]){
+	printf("\n//--//--//--//--//--//--//--//--//--//--//--//--//\n");
+	printf("Abnormalities Searching:\n");
+	printf("------//------//-------//\n");
+	
+	for(int i = 0; i < sus_idx; i++){
+		int found = sequentialSearch(i , sum_idx2, mergeFF, sus);
+		if(found >= 0 ){
+			printf("Abnormality Found!!!\n");
+			printf("Name: %s\n", mergeFF[found].name);
+			printf("ID: %s\n", mergeFF[found].id);
+			printf("Classification: %s\n", mergeFF[found].cls);
+			printf("Casualties: %d\n", mergeFF[found].sacri);
+		}else{
+			printf("Abnormality %s not found!!\n", sus[i].id);
+			printf("Maybe it will be send some other day.\n");
+		}
+		printf("------//------//-------//\n");
+	}
+	printf("-->Sending To Yesod\n");
+	
+}
+
+void netzachSacri(int sum_idx2, atr mergeFF, int sacri_min){
+	int maks = 0;
+	for(int i = 0; i < sum_idx2; i++){
+		if(maks < mergeFF[i].sacri){
+			maks = mergeFF[i].sacri;
 		}
 	}
 }
 
-void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[]){
+void pross(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr lowS[], int sus_idx, atr sus[], int sacri_min){
 	// memanggil void yang akan menandai rank dari setiap entitas
 	ranking(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
 /*
@@ -269,9 +371,13 @@ void angela(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr 
 	mergeArr(sum_idx1, lowS_idx, mergeF, lowS, mergeFF);
 
 	tabbleAngela(sum_idx2, mergeFF);
+	searchYesod(sum_idx2, mergeFF, sus_idx, sus);
+	printf("\n");
+	netzachSacri(sum_idx2, mergeFF, sacri_min);
+	
 	/*
-	for(int i = 0; i < sum_idx2; i++){
-		printf("%s %s %d\n", mergeFF[i].name, mergeFF[i].cls, mergeFF[i].sacri);
+	for(int i = 0; i < sus_idx; i++){
+		printf("%s \n", sus[i].id);
 	}
 	*/
 }
@@ -307,13 +413,13 @@ int main(){
 		scanf("%s %s %s %d", lowS[i].name, lowS[i].id, lowS[i].cls, &lowS[i].sacri);
 	}
 	
-	// input banya yang ingin di cari
+	// input banyak yang ingin di cari
 	int sus_idx;
 	scanf("%d", &sus_idx);
 	
 	// input id yang ingin di cari
 	atr sus[sus_idx];
-	sus[sus_idx].id[65];
+	sus[sus_idx];
 	for(int i = 0; i < sus_idx; i++){
 		scanf("%s", sus[i].id);
 	}
@@ -335,7 +441,7 @@ int main(){
 */	
 	
 	
-	// bagian void yang digunakan untuk menampilkan permintaan angela
-	angela(upS_idx, midS_idx, lowS_idx, upS, midS, lowS);
+	// bagian void yang digunakan untuk melakukan proses
+	pross(upS_idx, midS_idx, lowS_idx, upS, midS, lowS, sus_idx, sus, sacri_min);
 	return 0;
 }

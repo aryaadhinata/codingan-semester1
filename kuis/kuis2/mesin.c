@@ -200,19 +200,53 @@ void sort(int arr1_idx, int arr2_idx, int arr3_idx, bio arr1[], bio arr2[], bio 
 		selectionSort(arr3_idx, arr3);
 	}
 	
+	for(int i = 0; i < arr1_idx; i++){
+		printf("%s %s %s %d %d %d quality - %d\n", 
+		arr1[i].negara, arr1[i].nama, arr1[i].pend, arr1[i].portoHard, arr1[i].portoSoft, arr1[i].nganggur, arr1[i].quality);
+	}
+	
+	printf("\n=================================================================================\n");
+	
+	for(int i = 0; i < arr2_idx; i++){
+		printf("%s %s %s %d %d %d quality - %d\n", 
+		arr2[i].negara, arr2[i].nama, arr2[i].pend, arr2[i].portoHard, arr2[i].portoSoft, arr2[i].nganggur, arr2[i].quality);
+	}
+	
+	printf("\n=================================================================================\n");
+	
+	for(int i = 0; i < arr3_idx; i++){
+		printf("%s %s %s %d %d %d quality - %d\n", 
+		arr3[i].negara, arr3[i].nama, arr3[i].pend, arr3[i].portoHard, arr3[i].portoSoft, arr3[i].nganggur, arr3[i].quality);
+	}
+	
 	// bagian menggabungkan pertama untuk arr1 dengan arr2
 	int merge_idx1 = arr1_idx + arr2_idx;
 	bio merge1[merge_idx1];
 	mergeArr(arr1_idx, arr2_idx, arr1, arr2, merge1);
-
+	/*
+	for(int found = 0; found < merge_idx1; found++){
+		printf("%s %s %s %d %d %d quality - %d\n", 
+		merge1[found].negara, merge1[found].nama, merge1[found].pend, merge1[found].portoHard, merge1[found].portoSoft, merge1[found].nganggur, merge1[found].quality);
+	}
+	printf("\n===============================\n");
+	*/
+	
 	// bagian menggabungkan kedua untuk gabungan arr1 & arr2 dengan arr3
 	int merge_idx2 = merge_idx1 + arr3_idx;
 	bio merge2[merge_idx2];
 	mergeArr(merge_idx1, arr3_idx, merge1, arr3, merge2);
-	
+	/*
+	for(int found = 0; found < merge_idx2; found++){
+		printf("%s %s %s %d %d %d quality - %d\n", 
+		merge2[found].negara, merge2[found].nama, merge2[found].pend, merge2[found].portoHard, merge2[found].portoSoft, merge2[found].nganggur, merge2[found].quality);
+	}
+	*/
+
+	/*
 	if(strcmp(metSort, "quick") == 0){
 		quickSortPivotPinggir(0, merge_idx2 - 1, merge2); // saya tahu ini salah tapi ini cara ijo yang terpikirkan
 	}
+	*/
 	
 	// prosedur yang akan memnunculkan output
 	print(merge_idx2, merge2, target, maksTamp);
