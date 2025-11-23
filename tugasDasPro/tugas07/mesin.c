@@ -162,123 +162,212 @@ int leghtKorban(int n){
 void tabble(int sum_idx2, atr mergeFF[]){
 	printf("Abnormalities List:\n");
 	
-	// menghitung panjang array nama yanhg paling panjang
-	int leght_name = 5;
-	for(int i = 0; i < sum_idx2; i++){
-		if(strlen(mergeFF[i].name) > leght_name){
-			leght_name = strlen(mergeFF[i].name);
-		}
-	}
-
-	// menghitung panjang array id yanhg paling panjang
-	int leght_id = 8;
-	for(int i = 0; i < sum_idx2; i++){
-		if(strlen(mergeFF[i].id) > leght_id){
-			leght_name = strlen(mergeFF[i].id);
-		}
-	}
-	
-	// panjang untuk klasifikasinya
+	int leght_name = 4;
+	int leght_id = 3;
 	int leght_clas = strlen("klasifikasi");
-	for(int i = 0; i < sum_idx2; i++){
-		if(strlen(mergeFF[i].cls) > leght_clas){
-			leght_clas = strlen(mergeFF[i].cls);
+	int leght_sacri = 7;
+	
+	if(sum_idx2 != 0){
+		// menghitung panjang array nama yanhg paling panjang
+		for(int i = 0; i < sum_idx2; i++){
+			if(strlen(mergeFF[i].name) > leght_name){
+				leght_name = strlen(mergeFF[i].name);
+			}
+			printf("1. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		}
+		
+		// menghitung panjang array id yanhg paling panjang
+		for(int i = 0; i < sum_idx2; i++){
+			if(strlen(mergeFF[i].id) > leght_id){
+				leght_name = strlen(mergeFF[i].id);
+			}
+			printf("2. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
+		}
+
+		// panjang untuk klasifikasinya
+		for(int i = 0; i < sum_idx2; i++){
+			if(strlen(mergeFF[i].cls) > leght_clas){
+				leght_clas = strlen(mergeFF[i].cls);
+			}
+			printf("3. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
+		}
+
+		// menghitung korban yang paling banyak digitnya
+		for(int i = 0; i < sum_idx2; i++){
+			if(leght_sacri < leghtKorban(mergeFF[i].sacri)){
+				leght_sacri = leghtKorban(mergeFF[i].sacri);		
+			}
+			printf("4. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
+		}
+		printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 	}
 	
-	// menghitung korban yang paling banyak digitnya
-	int leght_sacri = 7;
-	for(int i = 0; i < sum_idx2; i++){
-		if(leght_sacri < leghtKorban(mergeFF[i].sacri)){
-			leght_sacri = leghtKorban(mergeFF[i].sacri);		
-		}
-	}
+	printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 	
 	// looping mebuat tabel
-	for(int i = 0; i <= sum_idx2 + 3; i++){
-		// bagian garis yang ada di atas dan bawah header serta yang ada di bagian paling bawah
-		if(i == 0 || i == 2 || i == sum_idx2 + 3){
-			printf("*");
-			for(int j = 0; j < leght_name + 2; j++){
-				printf("-");
-			}
-			
-			printf("*");
-			for(int j = 0; j < leght_id + 1; j++){
-				printf("-");
-			}
-			
-			printf("*");
-			for(int i = 0; i < leght_clas + 2; i++){
-				printf("-");
-			}
+	if(sum_idx2 != 0){
+		printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
+		for(int i = 0; i <= sum_idx2 + 3; i++){
+			// bagian garis yang ada di atas dan bawah header serta yang ada di bagian paling bawah
+			if(i == 0 || i == 2 || i == sum_idx2 + 3){
+				printf("*");
+				for(int j = 0; j < leght_name + 2; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				for(int j = 0; j < leght_id + 1; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				for(int i = 0; i < leght_clas + 2; i++){
+					printf("-");
+				}
 
-			printf("*");
-			for(int j = 0; j < leght_sacri + 1; j++){
-				printf("-");
-			}
-			
-			printf("*");
-			printf("\n");
-			
-		}else if(i == 1){ // bagian yang ada di isi kolom border
-			printf("| Nama");
-			for(int j = 0; j < leght_name - 3; j++){
-				printf(" ");
-			}
-			
-			printf("| ID");
-			for(int j = 0; j < leght_id - 2; j++){
-				printf(" ");
-			}
-			
-			printf("| Klasifikasi");
-			for(int j = 0; j < leght_clas - 10; j++){
-				printf(" ");
-			}
-			
-			printf("| Korban");
-			for(int j = 0; j < leght_sacri - 6; j++){
-				printf(" ");
-			}
-			printf("|");
-			printf("\n");
-		}else{ // bagian utama yang paling penting
-			printf("| %s ", mergeFF[i-3].name);
-			if(strlen(mergeFF[i-3].name) < leght_name){
-				int sisa = leght_name - strlen(mergeFF[i-3].name);
-				for(int j = 0; j < sisa; j++){
+				printf("*");
+				for(int j = 0; j < leght_sacri + 1; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				printf("\n");
+				
+			}else if(i == 1){ // bagian yang ada di isi kolom border
+				printf("| Nama");
+				for(int j = 0; j < leght_name - 3; j++){
 					printf(" ");
 				}
-			}
+				
+				printf("| ID");
+				for(int j = 0; j < leght_id - 2; j++){
+					printf(" ");
+				}
+				
+				printf("| Klasifikasi");
+				for(int j = 0; j < leght_clas - 10; j++){
+					printf(" ");
+				}
+				
+				printf("| Korban");
+				for(int j = 0; j < leght_sacri - 6; j++){
+					printf(" ");
+				}
+				printf("|");
+				printf("\n");
+			}else{ // bagian utama yang paling penting
+				printf("| ");
+				printf("%s ", mergeFF[i-3].name);
+				if(strlen(mergeFF[i-3].name) < leght_name){
+					int sisa = leght_name - strlen(mergeFF[i-3].name);
+					for(int j = 0; j < sisa; j++){
+						printf(" ");
+					}
+				}
+				
+				printf("| ");
+				printf("%s", mergeFF[i-3].id);
+				if(strlen(mergeFF[i-3].id) < leght_id){
+					int sisa = leght_id - strlen(mergeFF[i-3].id);
+					for(int j = 0; j < sisa; j++){
+						printf(" ");
+					}
+				}
 
-			printf("| %s", mergeFF[i-3].id);
-			if(strlen(mergeFF[i-3].id) < leght_id){
-				int sisa = leght_id - strlen(mergeFF[i-3].id);
-				for(int j = 0; j < sisa; j++){
-					printf(" ");
+				printf("| ");
+				printf("%s ", mergeFF[i-3].cls);
+				if(strlen(mergeFF[i-3].cls) < leght_clas){
+					int sisa = leght_clas - strlen(mergeFF[i-3].cls);
+					for(int j = 0; j < sisa; j++){
+						printf(" ");
+					}
 				}
+				
+				printf("| ");
+				printf("%d", mergeFF[i-3].sacri);
+				if(leght_sacri > leghtKorban(mergeFF[i-3].sacri)){
+					int sisa = leght_sacri - leghtKorban(mergeFF[i-3].sacri);
+					for(int j = 0; j < sisa-1; j++){
+						printf(" ");
+					}
+				}
+				printf(" |\n");
 			}
+		}
+	}else{
+		for(int i = 0; i <= 4; i++){
+			// bagian garis yang ada di atas dan bawah header serta yang ada di bagian paling bawah
+			if(i == 0 || i == 2 || i == 4){
+				printf("*");
+				for(int j = 0; j < leght_name + 2; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				for(int j = 0; j < leght_id + 1; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				for(int i = 0; i < leght_clas + 2; i++){
+					printf("-");
+				}
 
-			printf("| %s ", mergeFF[i-3].cls);
-			if(strlen(mergeFF[i-3].cls) < leght_clas){
-				int sisa = leght_clas - strlen(mergeFF[i-3].cls);
-				for(int j = 0; j < sisa; j++){
+				printf("*");
+				for(int j = 0; j < leght_sacri + 1; j++){
+					printf("-");
+				}
+				
+				printf("*");
+				printf("\n");
+				
+			}else if(i == 1){ // bagian yang ada di isi kolom border
+				printf("| Nama");
+				for(int j = 0; j < leght_name - 3; j++){
 					printf(" ");
 				}
-			}
-			
-			printf("| %d", mergeFF[i-3].sacri);
-			if(leght_sacri > leghtKorban(mergeFF[i-3].sacri)){
-				int sisa = leght_sacri - leghtKorban(mergeFF[i-3].sacri);
-				for(int j = 0; j < sisa-1; j++){
+				
+				printf("| ID");
+				for(int j = 0; j < leght_id - 2; j++){
 					printf(" ");
 				}
+				
+				printf("| Klasifikasi");
+				for(int j = 0; j < leght_clas - 10; j++){
+					printf(" ");
+				}
+				
+				printf("| Korban");
+				for(int j = 0; j < leght_sacri - 6; j++){
+					printf(" ");
+				}
+				printf("|");
+				printf("\n");
+			}else{ // bagian utama yang paling penting
+				printf("| ");
+				for(int j = 0; j < leght_name; j++){
+					printf(" ");
+				}
+				
+				printf(" | ");
+				for(int j = 0; j < leght_id; j++){
+					printf(" ");
+				}
+				
+				printf("| ");
+				for(int j = 0; j < leght_clas; j++){
+					printf(" ");
+				}
+				
+				printf(" | ");
+				for(int j = 0; j < leght_sacri; j++){
+					printf(" ");
+				}
+				printf("|\n");
+				}
 			}
-			printf(" |\n");
 		}
 	}
-}
 
 /*
 	sequential untuk mengecek semua id karena idnya kemungkinann besar tidak terurut
