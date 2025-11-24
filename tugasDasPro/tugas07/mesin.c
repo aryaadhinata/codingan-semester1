@@ -160,8 +160,8 @@ int leghtKorban(int n){
 	bagian void yang mebuat bentuk tabel
 */
 void tabble(int sum_idx2, atr mergeFF[]){
-	printf("Abnormalities List:\n");
 	
+	// nilai panjang patokan
 	int leght_name = 4;
 	int leght_id = 3;
 	int leght_clas = strlen("klasifikasi");
@@ -173,15 +173,13 @@ void tabble(int sum_idx2, atr mergeFF[]){
 			if(strlen(mergeFF[i].name) > leght_name){
 				leght_name = strlen(mergeFF[i].name);
 			}
-			printf("1. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		}
 		
 		// menghitung panjang array id yanhg paling panjang
 		for(int i = 0; i < sum_idx2; i++){
 			if(strlen(mergeFF[i].id) > leght_id){
-				leght_name = strlen(mergeFF[i].id);
+				leght_id = strlen(mergeFF[i].id);
 			}
-			printf("2. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		}
 
 		// panjang untuk klasifikasinya
@@ -189,7 +187,6 @@ void tabble(int sum_idx2, atr mergeFF[]){
 			if(strlen(mergeFF[i].cls) > leght_clas){
 				leght_clas = strlen(mergeFF[i].cls);
 			}
-			printf("3. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		}
 
 		// menghitung korban yang paling banyak digitnya
@@ -197,16 +194,11 @@ void tabble(int sum_idx2, atr mergeFF[]){
 			if(leght_sacri < leghtKorban(mergeFF[i].sacri)){
 				leght_sacri = leghtKorban(mergeFF[i].sacri);		
 			}
-			printf("4. %d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		}
-		printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
-	}
-	
-	printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
+	}	
 	
 	// looping mebuat tabel
 	if(sum_idx2 != 0){
-		printf("%d %d %d %d\n", leght_name, leght_id, leght_clas, leght_sacri);
 		for(int i = 0; i <= sum_idx2 + 3; i++){
 			// bagian garis yang ada di atas dan bawah header serta yang ada di bagian paling bawah
 			if(i == 0 || i == 2 || i == sum_idx2 + 3){
@@ -216,7 +208,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("*");
-				for(int j = 0; j < leght_id + 1; j++){
+				for(int j = 0; j < leght_id + 2; j++){
 					printf("-");
 				}
 				
@@ -239,7 +231,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 					printf(" ");
 				}
 				
-				printf("| ID");
+				printf("| ID ");
 				for(int j = 0; j < leght_id - 2; j++){
 					printf(" ");
 				}
@@ -266,7 +258,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("| ");
-				printf("%s", mergeFF[i-3].id);
+				printf("%s ", mergeFF[i-3].id);
 				if(strlen(mergeFF[i-3].id) < leght_id){
 					int sisa = leght_id - strlen(mergeFF[i-3].id);
 					for(int j = 0; j < sisa; j++){
@@ -287,7 +279,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				printf("%d", mergeFF[i-3].sacri);
 				if(leght_sacri > leghtKorban(mergeFF[i-3].sacri)){
 					int sisa = leght_sacri - leghtKorban(mergeFF[i-3].sacri);
-					for(int j = 0; j < sisa-1; j++){
+					for(int j = 0; j < sisa - 1; j++){
 						printf(" ");
 					}
 				}
@@ -343,31 +335,10 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				printf("|");
 				printf("\n");
-			}else{ // bagian utama yang paling penting
-				printf("| ");
-				for(int j = 0; j < leght_name; j++){
-					printf(" ");
-				}
-				
-				printf(" | ");
-				for(int j = 0; j < leght_id; j++){
-					printf(" ");
-				}
-				
-				printf("| ");
-				for(int j = 0; j < leght_clas; j++){
-					printf(" ");
-				}
-				
-				printf(" | ");
-				for(int j = 0; j < leght_sacri; j++){
-					printf(" ");
-				}
-				printf("|\n");
-				}
 			}
 		}
 	}
+}
 
 /*
 	sequential untuk mengecek semua id karena idnya kemungkinann besar tidak terurut
@@ -417,7 +388,7 @@ void searchYesod(int sum_idx2, atr mergeFF[], int sus_idx, atr sus[]){
 		printf("------//------//-------//\n");
 	}
 	printf("-->Sending To Yesod\n");
-	printf("//--//--//--//--//--//--//--//--//--//--//--//--//\n");
+	printf("\n//--//--//--//--//--//--//--//--//--//--//--//--//");
 }
 
 /*
@@ -432,8 +403,8 @@ void selectionSort(int arr_idx, atr arr[]){
 		/*perulangan mencari nilai minimum sepanjang indeks i + 1 sampai jumlah elemen
 		array*/
 		for(j= (i + 1); j < arr_idx; j++){
-			if((arr[minIndeks].sacri < arr[j].sacri) || ((arr[minIndeks].sacri == arr[j].sacri) && (arr[minIndeks].rank < arr[j].rank)) ||
-			((arr[minIndeks].sacri == arr[j].sacri) && (arr[minIndeks].rank == arr[j].rank) && (strcmp(arr[minIndeks].name, arr[j].name) < 0))){
+			if((arr[minIndeks].sacri < arr[j].sacri) || ((arr[minIndeks].sacri == arr[j].sacri) && (arr[minIndeks].rank > arr[j].rank)) ||
+			((arr[minIndeks].sacri == arr[j].sacri) && (arr[minIndeks].rank == arr[j].rank) && (strcmp(arr[minIndeks].name, arr[j].name) > 0))){
 				minIndeks = j;
 				}
 			}
@@ -465,6 +436,7 @@ void netzachSacri(int sum_idx2, atr mergeFF[], int sacri_min){
 			idx_min++;
 		}
 	}
+	printf("Abnormalities List\n");
 	tabble(idx_min, netks);
 }
 
@@ -492,6 +464,7 @@ void pross(int upS_idx, int midS_idx, int lowS_idx, atr upS[], atr midS[], atr l
 	mergeArr(sum_idx1, lowS_idx, mergeF, lowS, mergeFF);
 	
 	// pemanggilan pemanggilan produr untuk memenuhi berbagai pesanan
+	printf("Abnormalities List:\n");
 	tabble(sum_idx2, mergeFF);
 	printf("-->Sending To Angela\n");
 	searchYesod(sum_idx2, mergeFF, sus_idx, sus);
