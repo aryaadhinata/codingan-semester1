@@ -165,7 +165,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 	int leght_name = 4;
 	int leght_id = 3;
 	int leght_clas = 13;
-	int leght_sacri = 9;
+	int leght_sacri = 8;
 	
 	if(sum_idx2 != 0){
 		// menghitung panjang array nama yanhg paling panjang
@@ -191,11 +191,13 @@ void tabble(int sum_idx2, atr mergeFF[]){
 
 		// menghitung korban yang paling banyak digitnya
 		for(int i = 0; i < sum_idx2; i++){
-			if(leght_sacri < leghtKorban(mergeFF[i].sacri)){
-				leght_sacri = leghtKorban(mergeFF[i].sacri);		
+			if(leght_sacri < (leghtKorban(mergeFF[i].sacri)) + 2){
+				leght_sacri = leghtKorban(mergeFF[i].sacri) + 2;		
 			}
+		//printf("%d --- %d\n", leght_sacri, leghtKorban(mergeFF[i].sacri));
 		}
 	}	
+	
 	
 	// looping mebuat tabel
 	if(sum_idx2 != 0){
@@ -213,12 +215,12 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("*");
-				for(int i = 0; i < leght_clas + 2; i++){
+				for(int i = 0; i < leght_clas; i++){
 					printf("-");
 				}
 
 				printf("*");
-				for(int j = 0; j < leght_sacri + 2; j++){
+				for(int j = 0; j < leght_sacri ; j++){
 					printf("-");
 				}
 				
@@ -237,13 +239,13 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("| Klasifikasi");
-				for(int j = 0; j < leght_clas - 10; j++){
+				for(int j = 0; j < leght_clas - 12; j++){
 					printf(" ");
 				}
 				
 				printf("| Korban");
 				//printf("<%d>", leght_sacri);
-				for(int j = 0; j < leght_sacri - 5; j++){
+				for(int j = 0; j < leght_sacri - 7; j++){
 					printf(" ");
 				}
 				printf("|");
@@ -271,7 +273,7 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				printf("%s ", mergeFF[i-3].cls);
 				if(strlen(mergeFF[i-3].cls) < leght_clas){
 					int sisa = leght_clas - strlen(mergeFF[i-3].cls);
-					for(int j = 0; j < sisa; j++){
+					for(int j = 0; j < sisa - 2; j++){
 						printf(" ");
 					}
 				}
@@ -281,7 +283,8 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				printf("%d", mergeFF[i-3].sacri);
 				if(leght_sacri > leghtKorban(mergeFF[i-3].sacri)){
 					int sisa = leght_sacri - leghtKorban(mergeFF[i-3].sacri);
-					for(int j = 0; j < sisa; j++){
+					//printf(" %d --- %d == %d", leght_sacri, leghtKorban(mergeFF[i-3].sacri), sisa);
+					for(int j = 0; j < sisa - 2; j++){
 						printf(" ");
 					}
 				}
@@ -303,12 +306,12 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("*");
-				for(int i = 0; i < leght_clas + 2; i++){
+				for(int i = 0; i < leght_clas; i++){
 					printf("-");
 				}
 
 				printf("*");
-				for(int j = 0; j < leght_sacri + 1; j++){
+				for(int j = 0; j < leght_sacri; j++){
 					printf("-");
 				}
 				
@@ -327,12 +330,12 @@ void tabble(int sum_idx2, atr mergeFF[]){
 				}
 				
 				printf("| Klasifikasi");
-				for(int j = 0; j < leght_clas - 10; j++){
+				for(int j = 0; j < leght_clas - 12; j++){
 					printf(" ");
 				}
 				
 				printf("| Korban");
-				for(int j = 0; j < leght_sacri - 6; j++){
+				for(int j = 0; j < leght_sacri - 7; j++){
 					printf(" ");
 				}
 				printf("|");
