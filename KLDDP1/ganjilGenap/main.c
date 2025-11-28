@@ -6,7 +6,7 @@ int main() {
         scanf("%d", &arr[i]);
     }
 	
-	int gen = 0, gan = 0 arrGan[4], arrGen[4];
+	int gen = 0, gan = 0, arrGan[4], arrGen[4];
 	for(int i = 0; i < 6; i++){
 		if(arr[i] % 2 == 0) { // batas char angka
 			arrGen[gen] = arr[i]; // array angka
