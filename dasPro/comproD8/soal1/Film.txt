@@ -1,0 +1,8 @@
+F001 Knives_Out 130 G006 S006
+F002 Whiplash 106 G008 S004
+F003 1917 119 G007 S002
+F004 Hacksaw_Ridge 139 G007 S006
+F005 Green_Book 130 G001 S002
+F006 The_Social_Network 120 G001 S004
+F007 Oppenheimer 180 G001 S002
+#### #### -999 #### ####

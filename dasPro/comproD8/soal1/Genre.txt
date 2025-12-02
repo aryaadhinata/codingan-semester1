@@ -1,0 +1,10 @@
+G001 Drama_Biografi
+G002 Comedy
+G003 Sci-Fi
+G004 Horror
+G005 Action
+G006 Mystery
+G007 War
+G008 Drama
+G009 Thriller
+#### ####

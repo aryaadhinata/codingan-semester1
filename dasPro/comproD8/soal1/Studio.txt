@@ -1,0 +1,8 @@
+S001 Warner_Bros
+S002 Universal_Pictures
+S003 Walt_Disney
+S004 Sony_Pictures
+S005 Paramount
+S006 Lionsgate
+S007 CJ_Entertainment
+#### ####
