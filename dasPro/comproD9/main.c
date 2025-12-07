@@ -16,11 +16,12 @@ int main(){
             INC(pita);
             if ((GETCC() == 'a') || GETCC() == 'A'){
                 INC(pita);
-                DEC(pita);
                 if ((GETCC() == 'n') || GETCC() == 'N'){
                     count++;
                     DEC(pita);
+                    DEC(pita);
                 }else{
+                    DEC(pita);
                     DEC(pita);
                 }
             }else{

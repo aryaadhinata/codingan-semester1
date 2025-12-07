@@ -21,7 +21,7 @@ int main(){
     scanf("%s", opt); // Option, jika ingin menambahkan data, input "y" atau "Y"
     if(strcmp(opt,"y") == 0 || strcmp(opt, "Y") == 0){
        m--; // menetralkan ideks, karena elem pertama harusnya dimulai dari m
-	   
+        
         do{ // lakukan sampai kertemu EOF
 			m++; // iterasi untuk loop
             scanf("%s", listLagu[m].judul);

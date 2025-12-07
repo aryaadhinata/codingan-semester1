@@ -1,0 +1,7 @@
+R001 Saiyan
+R002 Namekian
+R003 Human
+R004 Frost_Demon
+R005 Android
+R006 Majin
+#### ####

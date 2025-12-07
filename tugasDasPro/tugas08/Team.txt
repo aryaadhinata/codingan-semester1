@@ -1,0 +1,7 @@
+T001 Z_Fighters
+T002 Frieza_Force
+T003 Pride_Troopers
+T004 Red_Ribbon_Army
+T005 Ginyu_Force
+T006 Time_Patrol
+#### ####
