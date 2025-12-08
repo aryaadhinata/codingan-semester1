@@ -8,7 +8,7 @@ typedef struct{
 }atr;
 
 void mReadFile(int *a, int *aN, atr sc[], char fileName[]);
-void readFile(int *a, int *b, atr sc[], char fileName[]);
+void readFile(int *a, int *b, int *tF, atr sc[], char fileName[]);
 
-void mMerge(int *aN, int *aR, int *aU, int *aT, atr sc[], char fileName[]);
+void mMerge(int *aN, int *aR, int *aU, int *aT, int *tF, atr sc[], char fileName[]);
 void mFunc();

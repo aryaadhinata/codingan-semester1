@@ -20,7 +20,7 @@ void mReadFile(int *a, int *aN, atr sc[], char fileName[]){
     fclose(ftemp);
 }
 
-void readFile(int *a, int *b, atr sc[], char fileName[]){
+void readFile(int *a, int *b, int *tF, atr sc[], char fileName[]){
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
 
@@ -40,10 +40,11 @@ void readFile(int *a, int *b, atr sc[], char fileName[]){
     }
 
     *b = *a;
+    *tF = *tF + 1;
     fclose(ftemp);
 }
 
-void mMerge(int *aN, int *aR, int *aU, int *aT, atr sc[], char fileName[]){
+void mMerge(int *aN, int *aR, int *aU, int *aT, int *tF, atr sc[], char fileName[]){
     FILE *fcFile;
     FILE *fFighter;
     FILE *fRace;
@@ -60,21 +61,28 @@ void mMerge(int *aN, int *aR, int *aU, int *aT, atr sc[], char fileName[]){
         fscanf(fFighter, "%s %s %s %s %s %d\n", sc[i].fkey, sc[i].name, 
                 sc[i].krace, sc[i].kunivrs, sc[i].kteam, &sc[i].plevel);
         
-        for(int j = 0; j < *aR; j++){
-            if(strcmp(sc[j].skey, sc[i].krace) == 0){
-                strcpy(sc[i].krace, sc[j].sname);
-            }
-        }
-        
-        for(int j = 0; j < *aU; j++){
-            if(strcmp(sc[j].skey, sc[i].kunivrs) == 0){
-                strcpy(sc[i].kunivrs, sc[j].sname);
-            }
-        }
-
-        for(int j = 0; j < *aT; j++){
-            if(strcmp(sc[j].skey, sc[i].kteam) == 0){
-                strcpy(sc[i].kteam, sc[j].sname);
+        switch (*tF){
+            case 1:{
+                for(int j = 0; j < *aR; j++){
+                    if(strcmp(sc[j].skey, sc[i].krace) == 0){
+                        strcpy(sc[i].krace, sc[j].sname);
+                    }
+                }
+                break;
+            }case 2:{
+                for(int j = 0; j < *aU; j++){
+                    if(strcmp(sc[j].skey, sc[i].kunivrs) == 0){
+                        strcpy(sc[i].kunivrs, sc[j].sname);
+                    }
+                }
+                break;
+            }case 3:{
+                for(int j = 0; j < *aT; j++){
+                    if(strcmp(sc[j].skey, sc[i].kteam) == 0){
+                        strcpy(sc[i].kteam, sc[j].sname);
+                    }
+                }
+                break;
             }
         }
     }
