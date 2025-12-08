@@ -1,9 +1,9 @@
-F001 Goku R001 U001 Z_Fighters 7565925
-F002 Vegeta R001 U001 Z_Fighters 7565925
-F003 Frieza R004 U001 Frieza_Force 1668443974
-F004 Jiren R003 U003 Pride_Troopers 1886351218
-F005 Piccolo R002 U001 Z_Fighters 7565925
-F006 Android_17 R005 U001 Z_Fighters 7565925
-F007 Hit R003 U002 Time_Patrol 1819243124
-F008 Majin_Buu R006 U001 Z_Fighters 7565925
+F001 Goku Saiyan Universe_7 Z_Fighters 9500
+F002 Vegeta Saiyan Universe_7 Z_Fighters 9400
+F003 Frieza Frost_Demon Universe_7 Frieza_Force 9300
+F004 Jiren Human Universe_11 Pride_Troopers 9800
+F005 Piccolo Namekian Universe_7 Z_Fighters 8000
+F006 Android_17 Android Universe_7 Z_Fighters 8900
+F007 Hit Human Universe_6 Time_Patrol 9100
+F008 Majin_Buu Majin Universe_7 Z_Fighters 8500
 #### #### #### #### #### -999
