@@ -85,16 +85,16 @@ void mMerge(int *aN, int *aR, int *aU, int *aT, int *tF, atr sc[], char fileName
                 break;
             }
         }
+        fprintf(fcFile, "%s %s %s %s %s %d\n", sc[i].fkey, sc[i].name,
+                sc[i].krace, sc[i].kunivrs, sc[i].kteam, sc[i].plevel);
     }
     
-    int idx = 0;
-    while(strcmp(sc[idx].fkey, "####") != 0){
-        fprintf(fcFile, "%s %s %s %s %s %d\n", sc[idx].fkey, sc[idx].name,
-                sc[idx].krace, sc[idx].kunivrs, sc[idx].kteam, sc[idx].plevel);
-        fscanf(fFighter, "%s %s %s %s %s %d\n", sc[idx].fkey, sc[idx].name, 
-                sc[idx].krace, sc[idx].kunivrs, sc[idx].kteam, &sc[idx].plevel);
-        idx++;
-    }
+    // int idx = 0;
+    // while(strcmp(sc[idx].fkey, "####") != 0){
+    //     fscanf(fFighter, "%s %s %s %s %s %d\n", sc[idx].fkey, sc[idx].name, 
+    //             sc[idx].krace, sc[idx].kunivrs, sc[idx].kteam, &sc[idx].plevel);
+    //     idx++;
+    // }
     fprintf(fcFile, "%s %s %s %s %s %d\n", "####", "####", "####", "####", "####", -999); 
 
     fclose(fcFile);
