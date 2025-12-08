@@ -23,7 +23,7 @@ int main(){
     printf("=====================================================\n");
     printf("Daftar Perintah\n");
     printf("1. INSERT\n");
-    printf("2. UPDATE\n")
+    printf("2. UPDATE\n");
     printf("=====================================================\n");
     do{
         printf("Jika ingin berhentik ketik 'No'\n");
@@ -34,8 +34,9 @@ int main(){
             INSf(aN, aR, aU, aT, fighter);
         }else if((strcmp(inp, "UPDATE") == 0) || (strcmp(inp, "2") == 0)){
             UPDf(aN, aR, aU, aT, fighter);
-        }else{
-            printf(Input tidak sesuai!\n);
+        }else if((strcmp(inp, "no") != 0) && (strcmp(inp, "No") != 0) &&
+            (strcmp(inp, "n") != 0) && (strcmp(inp, "N") != 0)){
+            printf("Input tidak sesuai!\n");
         }
 
         refresh();

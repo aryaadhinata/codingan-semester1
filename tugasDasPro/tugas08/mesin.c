@@ -117,40 +117,40 @@ void refresh(){ // digunakan untuk memperbaharui data
     mMerge(&aN, &aR, &aU, &aT, &tF, fighter, "FighterComplete.txt");
 }
 
-void INSm(int n, atr obj[], char fileName[]){
+void INSm(int n, atr obj[], char fileName[]){ // insert untuk file utama
     atr temp[65], new;
 
     printf("Masukan data: ");
-    scanf("%s %s %s %s %s %d", new.fkey, new.name, new.krace, 
-        new.kunivrs, new.kteam, &new.plevel);
+    scanf("%s %s %s %s %s %d", new.fkey, new.name, 
+        new.krace, new.kunivrs, new.kteam, &new.plevel);
 
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++) { // membaca isi file sekarang
         fscanf(ftemp, "%s %s %s %s %s %d\n", obj[i].fkey, obj[i].name, 
                 obj[i].krace, obj[i].kunivrs, obj[i].kteam, &obj[i].plevel);
     }
 
     int a = 0;
     do{
-        temp[a] = obj[a];
+        temp[a] = obj[a]; // memasukan nilai obj ke temp, temp yang akan kita otak atik
         a++;
     }while(strcmp(obj[a].fkey, "####") != 0);
     
     fclose(ftemp);
 
-    if(strcmp(new.fkey, temp[0].fkey) < 0){
+    if(strcmp(new.fkey, temp[0].fkey) < 0){ // jika urutan fkey di paling atas
         for(int i = n-1; i >= 0; i--) {
-            temp[i+1] = temp[i];
+            temp[i+1] = temp[i]; // memundurkan semua data
         }
         a++;
         temp[0] = new;
-    }else if(strcmp(new.fkey, temp[a-1].fkey) > 0){
-        temp[a] = new;
+    }else if(strcmp(new.fkey, temp[a-1].fkey) > 0){ // jika urutan fkey di paling bawah
+        temp[a] = new; // langsung tambah di akhir
         a++;
-    }else{
+    }else{ // jika urutan fkey di tengah tengah
         int k = 0, stop = 0;
-        while((k < a) && (stop == 0)){
+        while((k < a) && (stop == 0)){ // mencari posisi fkey baru
             if(strcmp(temp[k].fkey, new.fkey) > 0){
                 stop = 1;
             }else{
@@ -158,14 +158,14 @@ void INSm(int n, atr obj[], char fileName[]){
             }
         }
 
-        for(int l = a-1; l >= k; l--) {
+        for(int l = a-1; l >= k; l--) { // mengegeser data lama
             temp[l+1] = temp[l];
         }
-        temp[k] = new;
+        temp[k] = new; // memasukan new ke temp
     }
 
     ftemp = fopen(fileName, "w");
-    for(int i = 0; i < a; i++) {
+    for(int i = 0; i < a; i++) { // flush semua data
         fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].fkey, temp[i].name, 
                 temp[i].krace, temp[i].kunivrs, temp[i].kteam, temp[i].plevel);
     }
@@ -173,7 +173,7 @@ void INSm(int n, atr obj[], char fileName[]){
     fclose(ftemp);
 }
 
-void INS(int n, atr obj[], char fileName[]){
+void INS(int n, atr obj[], char fileName[]){ // insert untuk file sampingan
     atr temp[65], new;
 
     printf("Masukan data: ");
@@ -181,30 +181,30 @@ void INS(int n, atr obj[], char fileName[]){
 
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++) { // membaca isi data didalam file
         fscanf(ftemp, "%s %s\n", obj[i].skey, obj[i].sname);
     }
 
     int a = 0;
     do{
-        temp[a] = obj[a];
+        temp[a] = obj[a]; // memasukan data obj ke temp, temp yang kita otak atik
         a++;
     }while(strcmp(obj[a].skey, "####") != 0);
     
     fclose(ftemp);
 
-    if(strcmp(new.skey, temp[0].skey) < 0){
+    if(strcmp(new.skey, temp[0].skey) < 0){ // jika urutan skey paling atas
         for(int i = n-1; i >= 0; i--) {
-            temp[i+1] = temp[i];
+            temp[i+1] = temp[i]; // memundurkan semua data
         }
         a++;
         temp[0] = new;
-    }else if(strcmp(new.skey, temp[a-1].skey) > 0){
-        temp[a] = new;
+    }else if(strcmp(new.skey, temp[a-1].skey) > 0){ // jika urutan skey paling bawah
+        temp[a] = new; // langsung tambah di akhir
         a++;
-    }else{
+    }else{ // jika urutan skey di tengah tengah
         int k = 0, stop = 0;
-        while((k < a) && (stop == 0)){
+        while((k < a) && (stop == 0)){ // mencari posisi skey
             if(strcmp(temp[k].skey, new.skey) > 0){
                 stop = 1;
             }else{
@@ -212,21 +212,21 @@ void INS(int n, atr obj[], char fileName[]){
             }
         }
 
-        for(int l = a-1; l >= k; l--) {
+        for(int l = a-1; l >= k; l--) { // menggeser data lama
             temp[l+1] = temp[l];
         }
-        temp[k] = new;
+        temp[k] = new; // memasukan new ke temp
     }
 
     ftemp = fopen(fileName, "w");
-    for(int i = 0; i < a; i++) {
-        fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].skey, temp[i].sname);
+    for(int i = 0; i < a; i++) { // flush semua data
+        fprintf(ftemp, "%s %s\n", temp[i].skey, temp[i].sname);
     }
     fprintf(ftemp, "%s %s\n", "####", "####");
     fclose(ftemp);
 }
 
-void INSf(int aN, int aR, int aU, int aT, atr obj[]){
+void INSf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan Insert
     char comd[129];
 
     printf("Masukan nama file:\n");
@@ -247,8 +247,95 @@ void INSf(int aN, int aR, int aU, int aT, atr obj[]){
     }
 }
 
-void UPDf(int aN, int aR, int aU, int aT, atr obj[]){
-        char comd[129];
+void UPDm(int n, atr obj[], char fileName[]){
+    atr temp[65], new;
+
+    printf("masukan key (4 karakter) dan data yang ingin diubah: ");
+    scanf("%s %s %s %s %s %d", new.fkey, new.name, new.krace, 
+        new.kunivrs, new.kteam, &new.plevel);
+    
+    FILE *ftemp;
+    ftemp = fopen(fileName, "r");
+    for(int i = 0; i < n; i++) {
+        fscanf(ftemp, "%s %s %s %s %s %d\n", obj[i].fkey, obj[i].name, 
+                obj[i].krace, obj[i].kunivrs, obj[i].kteam, &obj[i].plevel);
+    }
+
+    int a = 0;
+    do{
+        temp[a] = obj[a];
+        a++;
+    }while(strcmp(obj[a].fkey, "####") != 0);
+
+    fclose(ftemp);
+
+    int k = 0, stop = 0;
+    while((k < a) && (stop == 0)){
+        if(strcmp(temp[k].fkey, new.fkey) == 0){
+            temp[k] = new;
+            stop = 1;
+        }else{
+            k++;
+        }
+    }
+
+    if(stop == 0){
+        printf("Tidak ada key yang sesuai!!!\n");
+    }else{
+        ftemp = fopen(fileName, "w");
+        for(int i = 0; i < a; i++) { // flush semua data
+            fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].fkey, temp[i].name, 
+                    temp[i].krace, temp[i].kunivrs, temp[i].kteam, temp[i].plevel);
+        }
+        fprintf(ftemp, "%s %s %s %s %s %d\n", "####", "####", "####", "####", "####", -999);
+        fclose(ftemp);
+    }
+}
+
+void UPD(int n, atr obj[], char fileName[]){
+    atr temp[65], new;
+
+    printf("Masukan key (4 karakter) dan data yang ingin diubah: ");
+    scanf("%s %s", new.skey, new.sname);
+
+    FILE *ftemp;
+    ftemp = fopen(fileName, "r");
+    for(int i = 0; i < n; i++) { // membaca isi data didalam file
+        fscanf(ftemp, "%s %s\n", obj[i].skey, obj[i].sname);
+    }
+
+    int a = 0;
+    do{
+        temp[a] = obj[a]; // memasukan data obj ke temp, temp yang kita otak atik
+        a++;
+    }while(strcmp(obj[a].skey, "####") != 0);
+    
+    fclose(ftemp);
+
+    int k = 0, stop = 0;
+    while((k < a) && (stop == 0)){
+        if(strcmp(temp[k].skey, new.skey) == 0){
+            temp[k] = new;
+            stop = 1;
+        }else{
+            k++;
+        }
+    }
+
+    if(stop == 0){
+        printf("Tidak ada key yang sesuai!!!\n");
+    }else{
+        ftemp = fopen(fileName, "w");
+        for(int i = 0; i < a; i++) { // flush semua data
+            fprintf(ftemp, "%s %s\n", temp[i].skey, temp[i].sname);
+        }
+        fprintf(ftemp, "%s %s\n", "####", "####");
+        fclose(ftemp);
+    }
+}
+
+void UPDf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan Update
+    char comd[129];
 
     printf("Masukan nama file:\n");
     printf(">>> ");

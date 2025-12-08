@@ -18,4 +18,6 @@ void INSm(int n, atr obj[], char fileName[]);
 void INS(int n, atr obj[], char fileName[]);
 void INSf(int aN, int aR, int aU, int aT, atr obj[]);
 
+void UPDm(int n, atr obj[], char fileName[]);
+void UPD(int n, atr obj[], char fileName[]);
 void UPDf(int aN, int aR, int aU, int aT, atr obj[]);
