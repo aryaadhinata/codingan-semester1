@@ -20,7 +20,6 @@ int main(){
     char opt[5];
     scanf("%s", opt); // Option, jika ingin menambahkan data, input "y" atau "Y"
     if(strcmp(opt,"y") == 0 || strcmp(opt, "Y") == 0){
-       
         // WRITE TO FILE data sebanyak n
         scanf("%d", &n);
         for(int i = 0; i < n; i++){
