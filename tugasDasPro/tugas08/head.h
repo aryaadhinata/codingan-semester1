@@ -2,8 +2,8 @@
 #include <string.h>
 
 typedef struct{
-    char fkey[5], name[17], race[17], univrs[17], team[17],
-        skey[5], sname[17], krace[5], kunivrs[5], kteam[5];
+    char fkey[5], name[33], race[33], univrs[33], team[33],
+        skey[5], sname[33], krace[5], kunivrs[5], kteam[5];
     int plevel;
 }atr;
 
