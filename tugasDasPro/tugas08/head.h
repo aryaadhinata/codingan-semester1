@@ -21,3 +21,13 @@ void INSf(int aN, int aR, int aU, int aT, atr obj[]);
 void UPDm(int n, atr obj[], char fileName[]);
 void UPD(int n, atr obj[], char fileName[]);
 void UPDf(int aN, int aR, int aU, int aT, atr obj[]);
+
+void DELm(int n, atr obj[], char fileName[]);
+void DEL(int n, atr obj[], char fileName[]);
+void DELf(int aN, int aR, int aU, int aT, atr obj[]);
+
+int dgtlen(int n);
+
+void SELm(int n, atr obj[], char fileName[]);
+void SEL(int n, atr obj[], char fileName[]);
+void SELf(int aN, int aR, int aU, int aT, atr obj[]);

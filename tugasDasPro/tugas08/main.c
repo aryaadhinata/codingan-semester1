@@ -21,12 +21,14 @@ int main(){
     char inp[129];
 
     printf("=====================================================\n");
-    printf("Daftar Perintah\n");
+    printf("                Daftar Perintah\n");
     printf("1. INSERT\n");
     printf("2. UPDATE\n");
+    printf("3. DELETE\n");
+    printf("4. SELECT\n");
     printf("=====================================================\n");
     do{
-        printf("Jika ingin berhentik ketik 'No'\n");
+        printf("Jika ingin berhentik ketik 'Yes'\n");
         printf(">> ");
         scanf("%s", inp);
         printf("\n");
@@ -34,13 +36,17 @@ int main(){
             INSf(aN, aR, aU, aT, fighter);
         }else if((strcmp(inp, "UPDATE") == 0) || (strcmp(inp, "2") == 0)){
             UPDf(aN, aR, aU, aT, fighter);
-        }else if((strcmp(inp, "no") != 0) && (strcmp(inp, "No") != 0) &&
-            (strcmp(inp, "n") != 0) && (strcmp(inp, "N") != 0)){
+        }else if((strcmp(inp, "DELETE") == 0) || (strcmp(inp, "3") == 0)){
+            DELf(aN, aR, aU, aT, fighter);
+        }else if((strcmp(inp, "SELECT") == 0) || (strcmp(inp, "4") == 0)){
+            SELf(aN, aR, aU, aT, fighter);
+        }else if((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
+            (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0)){
             printf("Input tidak sesuai!\n");
         }
 
         refresh();
-    }while((strcmp(inp, "no") != 0) && (strcmp(inp, "No") != 0) &&
-            (strcmp(inp, "n") != 0) && (strcmp(inp, "N") != 0));
+    }while((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
+            (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0));
     return 0;
 }
