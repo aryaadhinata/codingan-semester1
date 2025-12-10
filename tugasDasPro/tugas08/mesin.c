@@ -1,5 +1,32 @@
 #include "head.h"
 
+/*
+	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan Tugas Pratikum 8 dalam 
+	mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
+	kecurangan seperti yang di spesifikasikan. Aamin
+*/
+
+void MENU(){
+    printf("=====================================================\n");
+    printf("                   Daftar Perintah\n");
+    printf("1. INSERT\n");
+    printf("2. UPDATE\n");
+    printf("3. DELETE\n");
+    printf("4. SELECT\n");
+    printf("=====================================================\n");
+}
+
+void LIST(){
+    printf("=====================================================\n");
+    printf("                      Daftar File\n");
+    printf("1. FighterComplete.txt\n");
+    printf("2. Fighter.txt\n");
+    printf("3. Race.txt\n");
+    printf("4. Universe.txt\n");
+    printf("5. Team.txt\n");
+    printf("=====================================================\n");
+}
+
 void mReadFile(int *a, int *aN, atr obj[], char fileName[]){ // membaca file utama
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
@@ -139,38 +166,49 @@ void INSm(int n, atr obj[], char fileName[]){ // insert untuk file utama
     
     fclose(ftemp);
 
-    if(strcmp(new.fkey, temp[0].fkey) < 0){ // jika urutan fkey di paling atas
-        for(int i = n-1; i >= 0; i--) {
-            temp[i+1] = temp[i]; // memundurkan semua data
+    int mark = 1;
+    for(int i = 0; i < a; i++){
+        if(strcmp(temp[i].fkey, new.fkey) == 0){
+            mark = 0;
         }
-        a++;
-        temp[0] = new;
-    }else if(strcmp(new.fkey, temp[a-1].fkey) > 0){ // jika urutan fkey di paling bawah
-        temp[a] = new; // langsung tambah di akhir
-        a++;
-    }else{ // jika urutan fkey di tengah tengah
-        int k = 0, stop = 0;
-        while((k < a) && (stop == 0)){ // mencari posisi fkey baru
-            if(strcmp(temp[k].fkey, new.fkey) > 0){
-                stop = 1;
-            }else{
-                k++;
+    }
+
+    if(mark == 1){    
+        if(strcmp(new.fkey, temp[0].fkey) < 0){ // jika urutan fkey di paling atas
+            for(int i = n-1; i >= 0; i--) {
+                temp[i+1] = temp[i]; // memundurkan semua data
             }
+            a++;
+            temp[0] = new;
+        }else if(strcmp(new.fkey, temp[a-1].fkey) > 0){ // jika urutan fkey di paling bawah
+            temp[a] = new; // langsung tambah di akhir
+            a++;
+        }else{ // jika urutan fkey di tengah tengah
+            int k = 0, stop = 0;
+            while((k < a) && (stop == 0)){ // mencari posisi fkey baru
+                if(strcmp(temp[k].fkey, new.fkey) > 0){
+                    stop = 1;
+                }else{
+                    k++;
+                }
+            }
+
+            for(int l = a-1; l >= k; l--) { // mengegeser data lama
+                temp[l+1] = temp[l];
+            }
+            temp[k] = new; // memasukan new ke temp
         }
 
-        for(int l = a-1; l >= k; l--) { // mengegeser data lama
-            temp[l+1] = temp[l];
+        ftemp = fopen(fileName, "w");
+        for(int i = 0; i < a; i++) { // flush semua data
+            fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].fkey, temp[i].name, 
+                    temp[i].krace, temp[i].kunivrs, temp[i].kteam, temp[i].plevel);
         }
-        temp[k] = new; // memasukan new ke temp
+        fprintf(ftemp, "%s %s %s %s %s %d\n", "####", "####", "####", "####", "####", -999);
+        fclose(ftemp);
+    }else{
+        printf("fkey %s sudah ada\n", new.fkey);
     }
-
-    ftemp = fopen(fileName, "w");
-    for(int i = 0; i < a; i++) { // flush semua data
-        fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].fkey, temp[i].name, 
-                temp[i].krace, temp[i].kunivrs, temp[i].kteam, temp[i].plevel);
-    }
-    fprintf(ftemp, "%s %s %s %s %s %d\n", "####", "####", "####", "####", "####", -999);
-    fclose(ftemp);
 }
 
 void INS(int n, atr obj[], char fileName[]){ // insert untuk file sampingan
@@ -193,42 +231,54 @@ void INS(int n, atr obj[], char fileName[]){ // insert untuk file sampingan
     
     fclose(ftemp);
 
-    if(strcmp(new.skey, temp[0].skey) < 0){ // jika urutan skey paling atas
-        for(int i = n-1; i >= 0; i--) {
-            temp[i+1] = temp[i]; // memundurkan semua data
+    int mark = 1;
+    for(int i = 0; i < a; i++){
+        if(strcmp(temp[i].skey, new.skey) == 0){
+            mark = 0;
         }
-        a++;
-        temp[0] = new;
-    }else if(strcmp(new.skey, temp[a-1].skey) > 0){ // jika urutan skey paling bawah
-        temp[a] = new; // langsung tambah di akhir
-        a++;
-    }else{ // jika urutan skey di tengah tengah
-        int k = 0, stop = 0;
-        while((k < a) && (stop == 0)){ // mencari posisi skey
-            if(strcmp(temp[k].skey, new.skey) > 0){
-                stop = 1;
-            }else{
-                k++;
+    }
+
+    if(mark == 1){
+        if(strcmp(new.skey, temp[0].skey) < 0){ // jika urutan skey paling atas
+            for(int i = n-1; i >= 0; i--) {
+                temp[i+1] = temp[i]; // memundurkan semua data
             }
+            a++;
+            temp[0] = new;
+        }else if(strcmp(new.skey, temp[a-1].skey) > 0){ // jika urutan skey paling bawah
+            temp[a] = new; // langsung tambah di akhir
+            a++;
+        }else{ // jika urutan skey di tengah tengah
+            int k = 0, stop = 0;
+            while((k < a) && (stop == 0)){ // mencari posisi skey
+                if(strcmp(temp[k].skey, new.skey) > 0){
+                    stop = 1;
+                }else{
+                    k++;
+                }
+            }
+
+            for(int l = a-1; l >= k; l--) { // menggeser data lama
+                temp[l+1] = temp[l];
+            }
+            temp[k] = new; // memasukan new ke temp
         }
 
-        for(int l = a-1; l >= k; l--) { // menggeser data lama
-            temp[l+1] = temp[l];
+        ftemp = fopen(fileName, "w");
+        for(int i = 0; i < a; i++) { // flush semua data
+            fprintf(ftemp, "%s %s\n", temp[i].skey, temp[i].sname);
         }
-        temp[k] = new; // memasukan new ke temp
+        fprintf(ftemp, "%s %s\n", "####", "####");
+        fclose(ftemp);
+    }else{
+        printf("skey %s sudah ada\n", new.skey);
     }
-
-    ftemp = fopen(fileName, "w");
-    for(int i = 0; i < a; i++) { // flush semua data
-        fprintf(ftemp, "%s %s\n", temp[i].skey, temp[i].sname);
-    }
-    fprintf(ftemp, "%s %s\n", "####", "####");
-    fclose(ftemp);
 }
 
 void INSf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan Insert
     char comd[129];
 
+    LIST();
     printf("Masukan nama file:\n");
     printf(">>> ");
     scanf("%s", comd);
@@ -236,6 +286,9 @@ void INSf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan
 
     if(strcmp(comd, "Fighter.txt") == 0){
         INSm(aN, obj, "Fighter.txt");
+    }else if(strcmp(comd, "FighterComplete.txt") == 0){
+        INSm(aN, obj, "Fighter.txt");
+        printf("Masukan dalam bentuk key\n");
     }else if(strcmp(comd, "Race.txt") == 0){
         INS(aR, obj, "Race.txt");
     }else if(strcmp(comd, "Universe.txt") == 0){
@@ -245,6 +298,8 @@ void INSf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan
     }else{
         printf("File tidak ditemukan!\n");
     }
+
+    printf("\n");
 }
 
 void UPDm(int n, atr obj[], char fileName[]){ // void tempat melakukan update di file utama
@@ -337,6 +392,7 @@ void UPD(int n, atr obj[], char fileName[]){ // void tempat melakukan update di 
 void UPDf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan Update
     char comd[129];
 
+    LIST();
     printf("Masukan nama file:\n");
     printf(">>> ");
     scanf("%s", comd);
@@ -344,6 +400,9 @@ void UPDf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan
 
     if(strcmp(comd, "Fighter.txt") == 0){
         UPDm(aN, obj, "Fighter.txt");
+    }else if(strcmp(comd, "FighterComplete.txt") == 0){
+        UPDm(aN, obj, "Fighter.txt");
+        printf("Masukan dalam bentuk key\n");
     }else if(strcmp(comd, "Race.txt") == 0){
         UPD(aR, obj, "Race.txt");
     }else if(strcmp(comd, "Universe.txt") == 0){
@@ -353,6 +412,8 @@ void UPDf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan
     }else{
         printf("File tidak ditemukan!\n");
     }
+
+    printf("\n");
 }
 
 void DELm(int n, atr obj[], char fileName[]){ // void melakukan delete pada file utama
@@ -448,14 +509,17 @@ void DEL(int n, atr obj[], char fileName[]){ // void melakukan delete pada file 
 }
 
 void DELf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan delete
-        char comd[129];
+    char comd[129];
 
+    LIST();
     printf("Masukan nama file:\n");
     printf(">>> ");
     scanf("%s", comd);
     printf("\n");
 
     if(strcmp(comd, "Fighter.txt") == 0){
+        DELm(aN, obj, "Fighter.txt");
+    }else if(strcmp(comd, "FighterComplete.txt") == 0){
         DELm(aN, obj, "Fighter.txt");
     }else if(strcmp(comd, "Race.txt") == 0){
         DEL(aR, obj, "Race.txt");
@@ -466,6 +530,8 @@ void DELf(int aN, int aR, int aU, int aT, atr obj[]){ // void tempat percabangan
     }else{
         printf("File tidak ditemukan!\n");
     }
+
+    printf("\n");
 }
 
 int dgtlen(int n){
@@ -499,13 +565,31 @@ void SELm(int n, atr obj[], char fileName[]){
     
     fclose(ftemp);
 
-    int Dname, Dplevel;
+    int Dname, Dkrace, Dkunivrs, Dkteam, Dplevel;
     Dname = 4;
     for(int i = 0; i < n; i++) {
         if(strlen(temp[i].name) > Dname){
             Dname = strlen(temp[i].name);
         }
     }
+    Dkrace = 5;
+    for(int i = 0; i < n; i++) {
+        if(strlen(temp[i].krace) > Dkrace){
+            Dkrace = strlen(temp[i].krace);
+        }
+    }
+    Dkunivrs = 9;
+    for(int i = 0; i < n; i++) {
+        if(strlen(temp[i].kunivrs) > Dkunivrs){
+            Dkunivrs = strlen(temp[i].kunivrs);
+        }
+    }
+    Dkteam = 5;
+    for(int i = 0; i < n; i++) {
+        if(strlen(temp[i].kteam) > Dkteam){
+            Dkteam = strlen(temp[i].kteam);
+        }
+    }    
     Dplevel = 6;
     for(int i = 0; i < n; i++) {
         if(dgtlen(temp[i].plevel) > Dplevel){
@@ -526,16 +610,16 @@ void SELm(int n, atr obj[], char fileName[]){
             }
             
             printf("+");
-            for(int j = 0; j < 7; j++){
+            for(int j = 0; j < (Dkrace + 2); j++){
                 printf("-");
             }
             printf("+");
-            for(int j = 0; j < 11; j++){
+            for(int j = 0; j < (Dkunivrs + 2); j++){
                 printf("-");
             }
             
             printf("+");
-            for(int j = 0; j < 7; j++){
+            for(int j = 0; j < (Dkteam + 2); j++){
                 printf("-");
             }
 
@@ -557,8 +641,28 @@ void SELm(int n, atr obj[], char fileName[]){
             }
             
             printf("| krace ");
+            if (Dkrace > strlen("krace")){
+                int sel = Dkrace - strlen("krace");
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
+
             printf("| kuniverse ");
+            if (Dkunivrs > strlen("kuniverse")){
+                int sel = Dkunivrs - strlen("kuniverse");
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
+
             printf("| kteam ");
+            if (Dkteam > strlen("kteam")){
+                int sel = Dkteam - strlen("kteam");
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
 
             printf("| plevel ");
             if(Dplevel > strlen("plevel")){
@@ -579,14 +683,32 @@ void SELm(int n, atr obj[], char fileName[]){
                 }
             }
 
-            printf("| %s  ", temp[i - 3].krace);
-            printf("| %s      ", temp[i - 3].kunivrs);
-            printf("| %s  ", temp[i - 3].kteam);
+            printf("| %s ", temp[i - 3].krace);
+            if (Dkrace > strlen(temp[i - 3].krace)){
+                int sel = Dkrace - strlen(temp[i - 3].krace);
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
+            printf("| %s ", temp[i - 3].kunivrs);
+            if (Dkunivrs > (strlen(temp[i - 3].kunivrs))){
+                int sel = Dkunivrs - (strlen(temp[i - 3].kunivrs));
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
+            printf("| %s ", temp[i - 3].kteam);
+            if (Dkteam > strlen(temp[i - 3].kteam)){
+                int sel = Dkteam - strlen(temp[i - 3].kteam);
+                for(int j = 0; j < sel; j++){
+                    printf(" ");
+                }
+            }
 
             printf("| %d ", temp[i - 3].plevel);
             if(Dplevel > dgtlen(temp[i - 3].plevel)){
                 int sel = Dplevel - dgtlen(temp[i - 3].plevel);
-                for(int j = 0; j < (sel); j++){
+                for(int j = 0; j < sel; j++){
                     printf(" ");
                 }
             }
@@ -661,6 +783,7 @@ void SEL(int n, atr obj[], char fileName[]){
 void SELf(int aN, int aR, int aU, int aT, atr obj[]){
     char comd[129];
 
+    LIST();
     printf("Masukan nama file:\n");
     printf(">>> ");
     scanf("%s", comd);
@@ -668,6 +791,8 @@ void SELf(int aN, int aR, int aU, int aT, atr obj[]){
 
     if(strcmp(comd, "Fighter.txt") == 0){
         SELm(aN, obj, "Fighter.txt");
+    }else if(strcmp(comd, "FighterComplete.txt") == 0){
+        SELm(aN, obj, "FighterComplete.txt");
     }else if(strcmp(comd, "Race.txt") == 0){
         SEL(aR, obj, "Race.txt");
     }else if(strcmp(comd, "Universe.txt") == 0){
@@ -677,4 +802,6 @@ void SELf(int aN, int aR, int aU, int aT, atr obj[]){
     }else{
         printf("File tidak ditemukan!\n");
     }
+
+    printf("\n");
 }

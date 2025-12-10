@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan Tugas Pratikum 8 dalam 
+	mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
+	kecurangan seperti yang di spesifikasikan. Aamin
+*/
+
 typedef struct{
     char fkey[5], name[65], race[65], univrs[65], team[65],
-        skey[5], sname[65], krace[5], kunivrs[5], kteam[5],
+        skey[5], sname[65], krace[65], kunivrs[65], kteam[65],
         srace[65], sunivrs[65], steam[65];
     int plevel;
 }atr;
+
+void MENU();
+void LIST();
 
 void mReadFile(int *a, int *aN, atr sc[], char fileName[]);
 void readFile(int *a, int *b, int *tF, atr sc[], char fileName[]);

@@ -1,5 +1,11 @@
 #include "head.h"
 
+/*
+	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan Tugas Pratikum 8 dalam 
+	mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
+	kecurangan seperti yang di spesifikasikan. Aamin
+*/
+
 int main(){
     int a = 0, 
         aN = 0, aR = 0, 
@@ -29,6 +35,7 @@ int main(){
     printf("=====================================================\n");
     do{
         printf("Jika ingin berhentik ketik 'Yes'\n");
+        printf("Untuk meihat menu tekan 0. MENU\n");
         printf(">> ");
         scanf("%s", inp);
         printf("\n");
@@ -40,6 +47,8 @@ int main(){
             DELf(aN, aR, aU, aT, fighter);
         }else if((strcmp(inp, "SELECT") == 0) || (strcmp(inp, "4") == 0)){
             SELf(aN, aR, aU, aT, fighter);
+        }else if((strcmp(inp, "MENU") == 0) || (strcmp(inp, "0") == 0)){
+            MENU();
         }else if((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
             (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0)){
             printf("Input tidak sesuai!\n");
