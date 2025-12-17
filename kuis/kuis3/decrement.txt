@@ -1,0 +1,21 @@
+void dec(char pita[]) {
+    idx--;
+    len = 0;
+    cw[len] = 0;
+
+    while(pita[idx] != ' ' && idx >= 0) {
+        idx--;
+    }
+
+    while(pita[idx] == ' ') {
+        idx--;
+    }
+
+    while(pita[idx] != ' ' && idx >= 0) {
+        idx--;
+    }
+
+    idx++;
+
+    inc(pita);
+}
