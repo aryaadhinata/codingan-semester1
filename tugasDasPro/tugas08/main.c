@@ -39,6 +39,7 @@ int main(){
         printf(">> ");
         scanf("%s", inp);
         printf("\n");
+        refresh();
         if((strcmp(inp, "INSERT") == 0 )|| (strcmp(inp, "1") == 0 )){
             INSf(aN, aR, aU, aT, fighter);
         }else if((strcmp(inp, "UPDATE") == 0) || (strcmp(inp, "2") == 0)){
@@ -54,7 +55,6 @@ int main(){
             printf("Input tidak sesuai!\n");
         }
 
-        refresh();
     }while((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
             (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0));
     return 0;
