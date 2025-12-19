@@ -1,5 +1,11 @@
 #include "head.h"
 
+/*
+	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan Tugas Pratikum 9 dalam 
+	mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
+	kecurangan seperti yang di spesifikasikan. Aamin
+*/
+
 int indeksCC;
 int indeksCW;
 int panjangKata;
@@ -17,7 +23,7 @@ void INC(char pita[]){
     cc = pita[indeksCC];
 }
 
-int nextBlank(char pita[]){
+int nextBlank(char pita[]){ // cek apakah huruf didepannya huruf kecil atau bukan jika sekarang kapital
     int hasil = 0;
     if((cc >= 'A') && (cc <= 'Z')){
         indeksCC++;
@@ -77,7 +83,7 @@ void RESETWORD(){
 }
 
 int EOPWORD(char pita[]){
-    if(pita[indeksCW] == '.'){
+    if((pita[indeksCW] == '.') && (panjangKata == 0)){
         return 1;
     }else{
         return 0;
@@ -107,9 +113,33 @@ int GETPANJANGKATA(){
     return panjangKata;
 }
 
-int GETSUMASCII(){
+int GETSUMASCII(){ // mengeluarkan nilai ascii
     int hasil = 0;
     for(int i = 0; i < panjangKata; i++) {
         hasil += cw[i]; 
+    }
+
+    return hasil;
+}
+
+void selectionSort(char arr[][128], int n) {
+    int i, j, minIndex;
+    char temp[128];
+
+    for (i = 0; i < n - 1; i++) {
+        minIndex = i; // nilai indeks awal yang dicompare
+
+        for (j = i + 1; j < n; j++) {
+            if (strcmp(arr[j], arr[minIndex]) < 0) { // cek ururan secara alphabet
+                minIndex = j;
+            }
+        }
+
+        // Tukar string
+        if (minIndex != i) {
+            strcpy(temp, arr[i]);
+            strcpy(arr[i], arr[minIndex]);
+            strcpy(arr[minIndex], temp);
+        }
     }
 }
