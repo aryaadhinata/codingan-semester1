@@ -1,0 +1,6 @@
+S001 SiapKerja
+S002 Jago
+S003 Standard
+S004 BelajarLagi
+S005 Kurang
+#### ####
