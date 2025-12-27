@@ -6,45 +6,125 @@
 	kecurangan seperti yang di spesifikasikan. Aamin
 */
 //File Kosong
+
+int indeks;
+int panjangKata;
+char cw[129];
+
+void Salam(){
+printf("- _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ -\n");
+printf("+      /|_/|                                                +\n");
+printf("+     ( O.O )              !!!Selamat Datang!!!             +\n");
+printf("+      > ^ <                                                +\n");
+printf("- _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ -\n");
+printf("\n\n");
+}
+
 void MENU(){
-    printf("=====================================================\n");
-    printf("|                   Daftar Perintah                 |\n");
-    printf("|   1. INSERT                                       |\n");
-    printf("|   2. UPDATE                                       |\n");
-    printf("|   3. DELETE                                       |\n");
-    printf("|   4. SELECT                                       |\n");
-    printf("=====================================================\n");
+    printf("=========================================================================\n");
+    printf("|                         < Daftar Perintah >                           |\n");
+    printf("|   1. INSERT                                                           |\n");
+    printf("|   (langsung masukan nilai key, content, [skill, note dan scorenya])   |\n");
+    printf("|   2. UPDATE                                                           |\n");
+    printf("|   (langsung masukan nilai key, content, [skill, note dan scorenya])   |\n");
+    printf("|   3. DELETE                                                           |\n");
+    printf("|   (langsung masukan nilai fkeynya saja)                               |\n");
+    printf("|   4. SELECT                                                           |\n");
+    printf("|   (Sebut nama filenya saja)                                           |\n");
+    printf("=========================================================================\n");
+    printf("    [skil, ote dan score di gunakan ketika membuka file TabelPrimary] \n\n");
 }
 
 void LIST(){
     printf("=====================================================\n");
     printf("|                     Daftar File                   |\n");
-    printf("|   1. TableComplete.txt                            |\n");
-    printf("|   2. PrimaryTable.txt                             |\n");
+    printf("|   1. TableComplete.txt (Hanya bisa dilihat)       |\n");
+    printf("|   2. TabelPrimary.txt                             |\n");
     printf("|   3. SkillTable.txt                               |\n");
     printf("|   4. NoteTable.txt                                |\n");
     printf("=====================================================\n");
 }
 
+void STARTWORD(char pita[]){
+    indeks = 0;
+    panjangKata = 0;
+    while(pita[indeks] == ' '){
+        indeks++;
+    }
+
+    while((pita[indeks] != ' ') && (pita[indeks] != '#')){
+        cw[panjangKata] = pita[indeks];
+        indeks++;
+        panjangKata++;
+    }
+    
+    cw[panjangKata] = '\0';
+}
+
+void RESETWORD(){
+    panjangKata = 0;
+    cw[panjangKata] = '\0';
+}
+
+
+void INCWORD(char pita[]){
+    panjangKata = 0;
+    while(pita[indeks] == ' '){
+        indeks++;
+    }
+    
+    while((pita[indeks] != ' ') && (pita[indeks] != '#')){
+        cw[panjangKata] = pita[indeks];
+        indeks++;
+        panjangKata++;
+    }
+    
+    cw[panjangKata] = '\0';
+}
+
+char* GETWORD(){
+    return cw;
+}
+
+int GETPANJANGKATA(){
+    return panjangKata;
+}
+
+int EOPWORD(char pita[]){
+    if(pita[indeks] == '#'){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 void mReadFile(int *a, int *aP, atr obj[]){ // membaca file utama
     FILE *ftemp;
-    ftemp = fopen("C:\\coding\\TMD\\PrimaryTable.txt", "r");
+    ftemp = fopen("TabelPrimary.txt", "r");
 
-    int rval = fscanf(ftemp, "%s %s %s %s %d\n",
-        obj[*a].fkey, obj[*a].cont, obj[*a].kskill, obj[*a].knote, &obj[*a].score);
-
-    if((strcmp(obj[*a].fkey, "####") == 0) || (rval == EOF)){
+    if(ftemp == NULL){
         printf("File tidak ada\n");
     }else{
-        while(strcmp(obj[*a].fkey, "####") == 0){
-            *a = *a + 1;
-            fscanf(ftemp, "%s %s %s %s %d\n",
-                obj[*a].fkey, obj[*a].cont, obj[*a].kskill, obj[*a].knote, obj[*a].score);
+        int rval = fscanf(ftemp, "%s %s %s %s %s\n",
+            obj[*a].fkey, obj[*a].cont, obj[*a].kskill,
+            obj[*a].knote, obj[*a].score);
+
+        if(rval == EOF){
+            printf("File kosong\n");
+        }else{
+            while(strcmp(obj[*a].fkey, "####") != 0){
+                *a = *a + 1;
+
+                fscanf(ftemp, "%s %s %s %s %s\n",
+                    obj[*a].fkey, obj[*a].cont,
+                    obj[*a].kskill,obj[*a].knote, obj[*a].score);
+            }
         }
+        *aP = *a;
+        fclose(ftemp);
     }
-    *aP = *a;
-    fclose(ftemp);
 }
+
 
 void readFile(int *a, int *b, int *tF, atr obj[], char fileName[]){ // membaca file sampingan
     FILE *ftemp;
@@ -57,7 +137,6 @@ void readFile(int *a, int *b, int *tF, atr obj[], char fileName[]){ // membaca f
     int rval = fscanf(ftemp, "%s %s\n", obj[*a].skey, obj[*a].sname);
     if((strcmp(obj[*a].skey, "####") == 0) || rval == EOF){ // menghindari file kosong
         printf("File Kosong\n");
-        printf("masuk ke- %d\n", *tF);
     }else{
         while(strcmp(obj[*a].skey, "####") != 0){
             *a = *a +1;
@@ -77,13 +156,13 @@ void mMerge(int *aP, int *aS, int *aN, int *tF, atr obj[], char fileName[]){ // 
     FILE *fNote;
 
     fcFile = fopen(fileName, "w");
-    fPTable = fopen("C:\\coding\\TMD\\PrimaryTable.txt", "r");
+    fPTable = fopen("TabelPrimary.txt", "r");
     fSkill = fopen("SkillTable.txt", "r");
     fNote = fopen("NoteTable.txt", "r");
 
     for(int i = 0; i < *aP; i++){
-        fscanf(fPTable, "%s %s %s %s %d\n", obj[i].fkey, obj[i].cont, 
-                obj[i].kskill, obj[i].knote, &obj[i].score); // membaca file utama
+        fscanf(fPTable, "%s %s %s %s %s\n", obj[i].fkey, obj[i].cont, 
+                obj[i].kskill, obj[i].knote,&obj[i].score); // membaca file utama
         
         switch (*tF){ // kondisi untuk melakukan pergantian skey dengan namanya
             case 1:{ // case file SkillTable.txt
@@ -102,11 +181,11 @@ void mMerge(int *aP, int *aS, int *aN, int *tF, atr obj[], char fileName[]){ // 
                 break;
             }
         }
-        fprintf(fcFile, "%s %s %s %s %d\n", obj[i].fkey, obj[i].cont,
+        fprintf(fcFile, "%s %s %s %s %s\n", obj[i].fkey, obj[i].cont,
                 obj[i].sskill, obj[i].snote, obj[i].score); // digabungkan ke FighterComplete.txt
     }
     
-    fprintf(fcFile, "%s %s %s %s %d\n", "####", "####", "####", "####", -999); // dummy or EOF
+    fprintf(fcFile, "%s %s %s %s %s\n", "####", "####", "####", "####", -999); // dummy or EOF
 
     fclose(fcFile);
     fclose(fPTable);
@@ -128,21 +207,20 @@ void refresh(){ // digunakan untuk memperbaharui data
     mMerge(&aP, &aS, &aN, &tfKey, comp, "TableComplete.txt");
 }
 
-void INSm(int n, atr obj[], char fileName[]){ // insert untuk file utama
-    atr temp[65], new;
-
-    printf("Masukan data: ");
-    scanf("%s %s %s %s %d", new.fkey, new.cont, 
-        new.kskill, new.knote, &new.score);
+void INSm(int n, atr obj[], atr new){ // insert untuk file utama
+    atr temp[65];
+    int a = 0;
 
     FILE *ftemp;
-    ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) { // membaca isi file sekarang
-        fscanf(ftemp, "%s %s %s %s %d\n", obj[i].fkey, obj[i].cont, 
-                obj[i].kskill, obj[i].knote, &obj[i].score);
+    ftemp = fopen("TabelPrimary.txt", "r");
+    while(strcmp(obj[a].fkey, "####") != 0){
+        fscanf(ftemp, "%s %s %s %s %s\n",
+            obj[a].fkey, obj[a].cont,
+            obj[a].kskill,obj[a].knote,&obj[a].score);
+        a++;
     }
 
-    int a = 0;
+    a = 0;
     do{
         temp[a] = obj[a]; // memasukan nilai obj ke temp, temp yang akan kita otak atik
         a++;
@@ -183,24 +261,22 @@ void INSm(int n, atr obj[], char fileName[]){ // insert untuk file utama
             temp[k] = new; // memasukan new ke temp
         }
 
-        ftemp = fopen(fileName, "w");
+        ftemp = fopen("TabelPrimary.txt", "w");
         for(int i = 0; i < a; i++) { // flush semua data
-            fprintf(ftemp, "%s %s %s %s %d\n", temp[i].fkey, temp[i].cont, 
-                    temp[i].kskill, temp[i].knote, temp[i].score);
+            fprintf(ftemp, "%s %s %s %s %s\n", temp[i].fkey, temp[i].cont, 
+                    temp[i].kskill, temp[i].knote,temp[i].score);
         }
-        fprintf(ftemp, "%s %s %s %s %d\n", "####", "####", "####", "####", -999);
+        fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", -999);
         fclose(ftemp);
+        printf("Data berhasil ditambahkan\n");
     }else{
         printf("fkey %s sudah ada\n", new.fkey);
     }
 }
 
-void INS(int n, atr obj[], char fileName[]){ // insert untuk file sampingan
-    atr temp[65], new;
-
-    printf("Masukan data: ");
-    scanf("%s %s", new.skey, new.sname);
-
+void INS(int n, atr obj[], atr new, char fileName[]){ // insert untuk file sampingan
+    atr temp[65];
+    
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
     for(int i = 0; i < n; i++) { // membaca isi data didalam file
@@ -254,50 +330,26 @@ void INS(int n, atr obj[], char fileName[]){ // insert untuk file sampingan
         }
         fprintf(ftemp, "%s %s\n", "####", "####");
         fclose(ftemp);
+        printf("Data berhasil ditambahkan\n");
     }else{
         printf("skey %s sudah ada\n", new.skey);
     }
 }
 
-void INSf(int aP, int aNo, int As, atr obj[]){ // void tempat percabangan Insert
-    char comd[129];
-
-    LIST();
-    printf("Masukan nama file:\n");
-    printf(">>> ");
-    scanf("%s", comd);
-    printf("\n");
-
-    if(strcmp(comd, "PrimaryTable.txt") == 0){
-        INSm(aP, obj, "C:\\coding\\TMD\\PrimaryTable.txt");
-    }else if(strcmp(comd, "TableComplete.txt") == 0){
-        printf("Tidakmasuk ke file Join\n");
-    }else if(strcmp(comd, "SkillTable.txt") == 0){
-        INS(As, obj, "SkillTable.txt");
-    }else if(strcmp(comd, "NoteTable.txt") == 0){
-        INS(aNo, obj, "NoteTable.txt");
-    }else{
-        printf("File tidak ditemukan!\n");
-    }
-
-    printf("\n");
-}
-
-void UPDm(int n, atr obj[], char fileName[]){ // void tempat melakukan update di file utama
-    atr temp[65], new;
-
-    printf("masukan key (4 karakter) dan data yang ingin diubah: ");
-    scanf("%s %s %s %s %d", new.fkey, new.cont, new.kskill, 
-        new.knote, &new.score);
-    
-    FILE *ftemp;
-    ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) { // membaca semua data di file
-        fscanf(ftemp, "%s %s %s %s %d\n", obj[i].fkey, obj[i].cont, 
-                obj[i].kskill, obj[i].knote, &obj[i].score);
-    }
-
+void UPDm(int n, atr obj[], atr new){ // void tempat melakukan update di file utama
+    atr temp[65];
     int a = 0;
+
+    FILE *ftemp;
+    ftemp = fopen("TabelPrimary.txt", "r");
+    while(strcmp(obj[a].fkey, "####") != 0){
+        fscanf(ftemp, "%s %s %s %s %s\n",
+            obj[a].fkey, obj[a].cont,
+            obj[a].kskill,obj[a].knote,&obj[a].score);
+        a++;
+    }
+
+    a = 0;
     do{
         temp[a] = obj[a]; // menyalin data obj ke temp, temp yang di otak atik
         a++;
@@ -318,21 +370,19 @@ void UPDm(int n, atr obj[], char fileName[]){ // void tempat melakukan update di
     if(stop == 0){ // fkey yang di cari tidak ada
         printf("Tidak ada key yang sesuai!!!\n");
     }else{
-        ftemp = fopen(fileName, "w");
+        ftemp = fopen("TabelPrimary.txt", "w");
         for(int i = 0; i < a; i++) { // flush semua data
-            fprintf(ftemp, "%s %s %s %s %d\n", temp[i].fkey, temp[i].cont, 
-                    temp[i].kskill, temp[i].knote, temp[i].score);
+            fprintf(ftemp, "%s %s %s %s %s\n", temp[i].fkey, temp[i].cont, 
+                    temp[i].kskill, temp[i].knote,temp[i].score);
         }
-        fprintf(ftemp, "%s %s %s %s %d\n", "####", "####", "####", "####", -999);
+        fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", -999);
         fclose(ftemp);
+        printf("Data berhasil di UPDATE\n");
     }
 }
 
-void UPD(int n, atr obj[], char fileName[]){ // void tempat melakukan update di file sampingan
-    atr temp[65], new;
-
-    printf("Masukan key (4 karakter) dan data yang ingin diubah: ");
-    scanf("%s %s", new.skey, new.sname);
+void UPD(int n, atr obj[], atr new, char fileName[]){ // void tempat melakukan update di file sampingan
+    atr temp[65];
 
     FILE *ftemp;
     ftemp = fopen(fileName, "r");
@@ -367,48 +417,27 @@ void UPD(int n, atr obj[], char fileName[]){ // void tempat melakukan update di 
         }
         fprintf(ftemp, "%s %s\n", "####", "####");
         fclose(ftemp);
+        printf("Data berhasil di UPDATE\n");
     }
 }
 
-void UPDf(int aP, int aNo, int As, atr obj[]){ // void tempat percabangan Update
-    char comd[129];
-
-    LIST();
-    printf("Masukan nama file:\n");
-    printf(">>> ");
-    scanf("%s", comd);
-    printf("\n");
-
-    if(strcmp(comd, "PrimaryTable.txt") == 0){
-        UPDm(aP, obj, "PrimaryTable.txt");
-    }else if(strcmp(comd, "TableComplete.txt") == 0){
-        printf("Masukan dalam bentuk key\n");
-        UPDm(aP, obj, "PrimaryTable.txt");
-    }else if(strcmp(comd, "SkillTable.txt") == 0){
-        UPD(As, obj, "Race.txt");
-    }else if(strcmp(comd, "NoteTable.txt") == 0){
-        UPD(aNo, obj, "NoteTable.txt");
-    }else{
-        printf("File tidak ditemukan!\n");
-    }
-
-    printf("\n");
-}
-
-void DELm(int n, atr obj[], char fileName[]){ // void melakukan delete pada file utama
+void DELm(int n, atr obj[]){ // void melakukan delete pada file utama
     atr temp[65], new;
+    int a = 0;
 
     printf("masukan fkey dari data yang ingin di DELETE: ");
     scanf("%s", new.fkey);
 
     FILE *ftemp;
-    ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) { // membaca semua data file
-        fscanf(ftemp, "%s %s %s %s %s %d\n", obj[i].fkey, obj[i].cont, 
-                obj[i].kskill, obj[i].knote, &obj[i].score);
+    ftemp = fopen("TabelPrimary.txt", "r");
+    while(strcmp(obj[a].fkey, "####") != 0){
+        fscanf(ftemp, "%s %s %s %s %s\n",
+            obj[a].fkey, obj[a].cont,
+            obj[a].kskill,obj[a].knote,&obj[a].score);
+        a++;
     }
 
-    int a = 0;
+    a = 0;
     do{
         temp[a] = obj[a]; // memasukan data obj ke temp, temp yang kita otak atik
         a++;
@@ -432,12 +461,12 @@ void DELm(int n, atr obj[], char fileName[]){ // void melakukan delete pada file
     if(stop == 0){
         printf("Tidak ada key yang sesuai!!!\n");
     }else{
-        ftemp = fopen(fileName, "w");
+        ftemp = fopen("TabelPrimary.txt", "w");
         for(int i = 0; i < (a-1); i++) { // flush semua data
-            fprintf(ftemp, "%s %s %s %s %s %d\n", temp[i].fkey, temp[i].cont, 
-                    temp[i].kskill, temp[i].knote, temp[i].score);
+            fprintf(ftemp, "%s %s %s %s %s\n", temp[i].fkey, temp[i].cont, 
+                    temp[i].kskill, temp[i].knote,temp[i].score);
         }
-        fprintf(ftemp, "%s %s %s %s %s %d\n", "####", "####", "####", "####", "####", -999);
+        fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", -999);
         fclose(ftemp);
     }
 }
@@ -496,14 +525,14 @@ void DELf(int aP, int aNo, int As, atr obj[]){ // void tempat percabangan delete
     scanf("%s", comd);
     printf("\n");
 
-    if(strcmp(comd, "PrimaryTable.txt") == 0){
-        DELm(aP, obj, "PrimaryTable.txt");
+    if(strcmp(comd, "TabelPrimary.txt") == 0){
+        DELm(aP, obj);
     }else if(strcmp(comd, "FighterComplete.txt") == 0){
-        DELm(aP, obj, "PrimaryTable.txt");
+        printf("Table complete tidak bisa di akses secara langsung\n");
     }else if(strcmp(comd, "Race.txt") == 0){
         DEL(As, obj, "Race.txt");
     }else if(strcmp(comd, "NoteTable.txt") == 0){
-        UPD(aNo, obj, "NoteTable.txt");
+        DEL(aNo, obj, "NoteTable.txt");
     }else{
         printf("File tidak ditemukan!\n");
     }
@@ -511,30 +540,19 @@ void DELf(int aP, int aNo, int As, atr obj[]){ // void tempat percabangan delete
     printf("\n");
 }
 
-int dgtlen(int n){
-	if(n == 0){
-		return 1;
-	}else{
-		int count = 0;
-		while(n != 0){
-			n /= 10;
-			count++;
-		}
-		return count;
-	}
-}
-
-void SELm(int n, atr obj[], char fileName[]){
+void SELm(int n, atr obj[]){
     atr temp[65];
+    int a = 0;
 
     FILE *ftemp;
-    ftemp = fopen(fileName, "r");
-    for(int i = 0; i < n; i++) {
-        fscanf(ftemp, "%s %s %s %s %d\n", obj[i].fkey, obj[i].cont, 
-                obj[i].kskill, obj[i].knote, &obj[i].score);
+    ftemp = fopen("TabelPrimary.txt", "r");
+    while(strcmp(obj[a].fkey, "####") != 0){
+        fscanf(ftemp, "%s %s %s %s %s\n",
+            obj[a].fkey, obj[a].cont,
+            obj[a].kskill,obj[a].knote, obj[a].score);
+        a++;
     }
-
-    int a = 0;
+    a = 0;
     do{
         temp[a] = obj[a]; // memasukan data obj ke temp, temp yang kita otak atik
         a++;
@@ -563,8 +581,8 @@ void SELm(int n, atr obj[], char fileName[]){
     }    
     Dscore = 5;
     for(int i = 0; i < n; i++) {
-        if(dgtlen(temp[i].score) > Dscore){
-            Dscore = dgtlen(temp[i].score);
+        if(strlen(temp[i].score) > Dscore){
+            Dscore = strlen(temp[i].score);
         }
     }
 
@@ -656,9 +674,9 @@ void SELm(int n, atr obj[], char fileName[]){
                 }
             }
 
-            printf("| %d ", temp[i - 3].score);
-            if(Dscore > dgtlen(temp[i - 3].score)){
-                int sel = Dscore - dgtlen(temp[i - 3].score);
+            printf("| %s ", temp[i - 3].score);
+            if(Dscore > strlen(temp[i - 3].score)){
+                int sel = Dscore - strlen(temp[i - 3].score);
                 for(int j = 0; j < sel; j++){
                     printf(" ");
                 }
@@ -740,10 +758,10 @@ void SELf(int aN, int aNo, int As, atr obj[]){
     scanf("%s", comd);
     printf("\n");
 
-    if(strcmp(comd, "PrimaryTable.txt") == 0){
-        SELm(aN, obj, "PrimaryTable.txt");
+    if(strcmp(comd, "TabelPrimary.txt") == 0){
+        SELm(aN, obj);
     }else if(strcmp(comd, "TableComplete.txt") == 0){
-        SELm(aN, obj, "TableComplete.txt");
+        printf("Table complete tidak bisa di akses secara langsung\n");
     }else if(strcmp(comd, "SkillTable.txt") == 0){
         SEL(As, obj, "SkillTable.txt");
     }else if(strcmp(comd, "NoteTable.txt") == 0){

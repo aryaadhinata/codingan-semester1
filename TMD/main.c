@@ -7,6 +7,7 @@
 */
 
 int main(){
+    Salam();
     int a = 0, aP = 0, aS = 0, 
         aN = 0, tfKey = 0;
     atr comp[65];
@@ -19,32 +20,162 @@ int main(){
     readFile(&a, &aN, &tfKey, comp, "NoteTable.txt");
     mMerge(&aP, &aS, &aN, &tfKey, comp, "TableComplete.txt");
 
-    char inp[129];
+    char pita[513];
 
     MENU();
-    do{
-        printf("Jika ingin berhentik ketik 'Yes'\n");
-        printf("Untuk meihat menu tekan 0. MENU\n");
-        printf(">> ");
-        scanf(" %s", inp);
-        printf("\n");
-        refresh();
-        if((strcmp(inp, "INSERT") == 0 )|| (strcmp(inp, "1") == 0 )){
-            INSf(aP, aS, aN, comp);
-        }else if((strcmp(inp, "UPDATE") == 0) || (strcmp(inp, "2") == 0)){
-            UPDf(aP, aS, aN, comp);
-        }else if((strcmp(inp, "DELETE") == 0) || (strcmp(inp, "3") == 0)){
-            DELf(aP, aS, aN, comp);
-        }else if((strcmp(inp, "SELECT") == 0) || (strcmp(inp, "4") == 0)){
-            SELf(aP, aS, aN, comp);
-        }else if((strcmp(inp, "MENU") == 0) || (strcmp(inp, "0") == 0)){
-            MENU();
-        }else if((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
-            (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0)){
-            printf("Input tidak sesuai!\n");
-        }
+    LIST();
 
-    }while((strcmp(inp, "yes") != 0) && (strcmp(inp, "Yes") != 0) &&
-            (strcmp(inp, "y") != 0) && (strcmp(inp, "Y") != 0));
-    return 0;
+    refresh();
+    printf("DBMS [Arya]>> ");
+
+    scanf("%512[^\n]s", pita);
+
+    STARTWORD(pita);
+    
+    printf("\n");
+    if((strcmp(GETWORD(), "INSERT") == 0 )|| (strcmp(GETWORD(), "1") == 0 )){
+        INCWORD(pita);    
+        if(strcmp(GETWORD(), "TabelPrimary.txt") == 0){
+            atr new;
+
+            for(int i = 0; i < 5; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.fkey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.cont, GETWORD());
+                        break;
+                    }case 2:{
+                        strcpy(new.kskill, GETWORD());
+                        break;
+                    }case 3:{
+                        strcpy(new.knote, GETWORD());
+                        break;
+                    }case 4:{
+                        strcpy(new.score, GETWORD());
+                        break;
+                    }
+                }
+            }
+
+            INSm(aP, comp, new);
+        }else if(strcmp(GETWORD(), "SkillTable.txt") == 0){
+            atr new;
+
+            for(int i = 0; i < 2; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.skey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.sname, GETWORD());
+                        break;
+                    }
+                }
+            }
+            
+            INS(aS, comp, new, "SkillTable.txt");
+        }else if(strcmp(GETWORD(), "NoteTable.txt") == 0){
+            atr new;
+
+            for(int i = 0; i < 2; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.skey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.sname, GETWORD());
+                        break;
+                    }
+                }
+            }
+            
+            INS(aN, comp, new, "NoteTable.txt");
+        }else if(strcmp(GETWORD(), "TableComplete.txt") == 0){
+            printf("ini file join tidak bisa di otak-atik\n");
+        }else{
+            printf("File tidak ditemukan!\n");
+        }
+    }else if((strcmp(GETWORD(), "UPDATE") == 0) || (strcmp(GETWORD(), "2") == 0)){
+        INCWORD(pita);
+        if(strcmp(GETWORD(), "TabelPrimary.txt") == 0){
+            atr new;
+            
+            for(int i = 0; i < 5; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.fkey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.cont, GETWORD());
+                        break;
+                    }case 2:{
+                        strcpy(new.kskill, GETWORD());
+                        break;
+                    }case 3:{
+                        strcpy(new.knote, GETWORD());
+                        break;
+                    }case 4:{
+                        strcpy(new.score, GETWORD());
+                        break;
+                    }
+                }
+            }
+            
+            UPDm(aP, comp, new);
+        }else if(strcmp(GETWORD(), "SkillTable.txt") == 0){
+            atr new;
+
+            for(int i = 0; i < 2; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.skey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.sname, GETWORD());
+                        break;
+                    }
+                }
+            }
+
+            UPD(aS, comp, new, "Race.txt");
+        }else if(strcmp(GETWORD(), "NoteTable.txt") == 0){
+            atr new;
+
+            for(int i = 0; i < 2; i++) {
+                INCWORD(pita);
+                switch (i){
+                    case 0:{
+                        strcpy(new.skey, GETWORD());
+                        break;
+                    }case 1:{
+                        strcpy(new.sname, GETWORD());
+                        break;
+                    }
+                }
+            }
+            
+            UPD(aN, comp, new, "NoteTable.txt");
+        }else if(strcmp(GETWORD(), "TableComplete.txt") == 0){
+            printf("ini file join tidak bisa di otak-atik\n");
+        }else{
+            printf("File tidak ditemukan!\n");
+        }
+    }else if((strcmp(GETWORD(), "DELETE") == 0) || (strcmp(GETWORD(), "3") == 0)){
+        INCWORD(pita);
+        DELf(aP, aS, aN, comp);
+    }else if((strcmp(GETWORD(), "SELECT") == 0) || (strcmp(GETWORD(), "4") == 0)){
+        INCWORD(pita);
+        SELf(aP, aS, aN, comp);
+    }else{
+        printf("Perintah tidak dikenali!\n");
+    }
+
+return 0;
 }

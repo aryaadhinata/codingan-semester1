@@ -1,1 +1,6 @@
+P001 Arya Standard HanyaMengikutiArus 2000
+P002 Raka SiapKerja OrangYangMauBerjuang 5346
+P003 Bambang Kurang TidakTahuBatasDiri 7813
+P004 Rudya Jago SudahPunyaDasarSejakAwal 6371
+P005 Hanna BelajarLagi JalaninAjaDulu 7102
 #### #### #### #### -999
