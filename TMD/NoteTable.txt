@@ -1,4 +1,4 @@
-N001 SudahPunyaDasarSejakAwal
+N001 SudahPunyaDasar
 N002 OrangYangMauBerjuang
 N003 HanyaMengikutiArus
 N004 TidakTahuBatasDiri

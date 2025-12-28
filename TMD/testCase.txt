@@ -1,0 +1,23 @@
+INSERT TabelPrimary.txt P009 Surya S004 N004 #
+INSERT SkillTable.txt S008 Sesepuh #
+INSERT NoteTable.txt N007 Wawawa #
+INSERT TableComplete.txt P009 Surya S004 N004 #
+INSERT Tabtabtab.txt T003 SAWITTT #
+
+UPDATE TabelPrimary.txt P009 UYa S004 N001 #
+UPDATE SkillTable.txt S008 SiSepuh #
+UPDATE NoteTable.txt N007 WiWeWo #
+UPDATE TableComplete.txt P009 Surya S001 N001 #
+UPDATE Tabtabtab.txt T003 Monokotil #
+
+DELETE TabelPrimary.txt P009 #
+DELETE SkillTable.txt S008 #
+DELETE NoteTable.txt N007 #
+DELETE TableComplete.txt P009 #
+DELETE Tabtabtab.txt T003 #
+
+SHOW TabelPrimary.txt #
+SHOW SkillTable.txt #
+SHOW NoteTable.txt #
+SHOW TableComplete.txt #
+SHOW Tabtabtab.txt #
