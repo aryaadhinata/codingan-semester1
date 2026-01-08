@@ -1,5 +1,5 @@
 #include "head.h"
- 
+
 /*
 	Saya Mohammad Arya Dhinata dengan NIM 2504992 mengerjakan Tugas Masa Depan dalam 
 	mata kuliah dasar-dasar pemrogaraman untuk keberkahanNya maka saya tidak melakukan
@@ -35,9 +35,9 @@ int main(){
     int condition = 0; // penanda keluar program
     do{ // loop utama program
         printf("DBMS [Arya]>> "); // prompt input
-        refresh(); // memperbaharui data
-        
         scanf(" %512[^\n]s", pita); // membaca input user
+        
+        refresh(); // memperbaharui data
 
         STARTWORD(pita); // memulai pembacaan kata
         

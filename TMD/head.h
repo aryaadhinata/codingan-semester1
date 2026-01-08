@@ -7,7 +7,19 @@
 	kecurangan seperti yang di spesifikasikan. Aamin
 */
 
-typedef struct{ // definisi tipe bentukan atr
+typedef struct{ 
+    /*  
+        fkey    : primary key di file utama
+        cont    : content di file utama
+        skey    : secondary key di file sampingan
+        sname   : secondary name di file sampingan
+        kskill  : key skill di file utama
+        knote   : key note di file utama
+        scont   : content yang sudah diganti skill dan note di file join
+        sskill  : skill yang sudah diganti namanya di file join
+        snote   : note yang sudah diganti namanya di file join
+        score   : score di file utama
+    */
     char fkey[5], cont[256], skey[5], sname[256],
         kskill[256], knote[256],
         scont[256], sskill[256], snote[256],
@@ -38,7 +50,7 @@ void refresh(); // memperbaharui data
 
 void INSm(int n, atr obj[], atr new); // void tempat melakukan insert di file utama
 void INS(int n, atr obj[], atr new, char fileName[]); // void tempat melakukan insert di file sampingan
-
+    
 void UPDm(int n, atr obj[], atr new); // void tempat melakukan update di file utama
 void UPD(int n, atr obj[], atr new, char fileName[]); // void tempat melakukan update di file sampingan
 

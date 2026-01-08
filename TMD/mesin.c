@@ -138,7 +138,7 @@ void readFile(int *a, int *b, int *tF, atr obj[], char fileName[]){ // membaca f
 
     int rval = fscanf(ftemp, "%s %s\n", obj[*a].skey, obj[*a].sname);
     if((strcmp(obj[*a].skey, "####") == 0) || rval == EOF){ // menghindari file kosong
-        printf("File Kosong\n");
+        printf("File %s Kosong\n", fileName);
     }else{
         while(strcmp(obj[*a].skey, "####") != 0){
             *a = *a +1;
@@ -277,6 +277,7 @@ void INSm(int n, atr obj[], atr new){ // insert untuk file utama
         }
         fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", "####");
         fclose(ftemp);
+        refresh();
         printf("Data berhasil ditambahkan\n");
     }else{
         printf("fkey %s sudah ada\n", new.fkey);
@@ -340,6 +341,7 @@ void INS(int n, atr obj[], atr new, char fileName[]){ // insert untuk file sampi
         fprintf(ftemp, "%s %s\n", "####", "####");
         fclose(ftemp);
         printf("Data berhasil ditambahkan\n");
+        refresh();
     }else{
         printf("skey %s sudah ada\n", new.skey);
     }
@@ -386,6 +388,7 @@ void UPDm(int n, atr obj[], atr new){ // void tempat melakukan update di file ut
         }
         fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", "####");
         fclose(ftemp);
+        refresh();
         printf("Data berhasil di UPDATE\n");
     }
 }
@@ -426,6 +429,7 @@ void UPD(int n, atr obj[], atr new, char fileName[]){ // void tempat melakukan u
         }
         fprintf(ftemp, "%s %s\n", "####", "####");
         fclose(ftemp);
+        refresh();
         printf("Data berhasil di UPDATE\n");
     }
 }
@@ -474,6 +478,7 @@ void DELm(int n, atr obj[], atr new){ // void melakukan delete pada file utama
                 }
         fprintf(ftemp, "%s %s %s %s %s\n", "####", "####", "####", "####", "####");
         fclose(ftemp);
+        refresh();
         printf("Data berhasil di DELETE\n");
     }
 }
@@ -517,6 +522,7 @@ void DEL(int n, atr obj[], atr new, char fileName[]){ // void melakukan delete p
         }
         fprintf(ftemp, "%s %s\n", "####", "####");
         fclose(ftemp);
+        refresh();
         printf("Data berhasil di DELETE\n");
     }
 }
