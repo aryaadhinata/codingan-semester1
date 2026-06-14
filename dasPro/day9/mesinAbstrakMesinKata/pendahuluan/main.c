@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "head.h"
 
 int main(){
@@ -10,7 +9,7 @@ int main(){
     printf("%s\n", GETWORD());
     while (EOPWORD(pita) == 0){
         INCWORD(pita);
-        printf("%s\n", GETWORD());
+        printf("- %s\n", GETWORD());
     }
 
     return 0;

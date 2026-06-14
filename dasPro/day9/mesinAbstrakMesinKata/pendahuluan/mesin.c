@@ -1,5 +1,9 @@
 #include "head.h"
 
+int indeks;
+int panjangKata;
+char cw[32];
+
 void STARTWORD(char pita[]){
     indeks = 0;
     panjangKata = 0;

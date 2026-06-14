@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-int indeks;
-int panjangKata;
-char cw[32];
+extern int indeks;
+extern int panjangKata;
+extern char cw[32];
 
 void STARTWORD(char pita[]);
 void RESETWORD();
