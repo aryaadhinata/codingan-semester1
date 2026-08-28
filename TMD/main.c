@@ -9,6 +9,7 @@
 int main(){
     Salam(); // salam pembuka
     /*
+        penggunaan variable :
         a    : banyak data utama
         aP   : banyak data primary
         aS   : banyak data skill

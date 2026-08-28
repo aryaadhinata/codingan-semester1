@@ -760,7 +760,7 @@ void SHO(int n, atr obj[], char fileName[]){ // void melakukan show pada file sa
 void Thx(){ // ucapan terima kasih
     printf("Dari semster ini aku banyak belajar hal hal baru\n");
     printf("Semua kesulitan yang aku alami\n");
-    printf("Semoga denganini aku dapat bertumbuh lebih baik\n");
+    printf("Semoga dengan ini aku dapat bertumbuh lebih baik\n");
     printf("mohammad arya dhinata - 2504992\n"); 
     printf("- _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ -\n");
     printf("+     /|_/|                        o0O0o                      /|_/|     +\n");
